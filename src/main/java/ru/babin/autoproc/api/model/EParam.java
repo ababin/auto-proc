@@ -2,9 +2,26 @@ package ru.babin.autoproc.api.model;
 
 public enum EParam {
 	
-	DESCRIPTION,
+	ADS_NUMBER,
 	
-	AUTO_;
+	NAME,
+	
+	ADS_URL,
+
+	IMAGE_URL,
+	
+	DESC_SHORT,
+	
+	PRICE,
+	
+	DATE_STR,
+	
+	DATE,	
 	
 	
+	PROVIDER_NAME,
+	PROVIDER_SITE,	
+	
+	
+	;
 }

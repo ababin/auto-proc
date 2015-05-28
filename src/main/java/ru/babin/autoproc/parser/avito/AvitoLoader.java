@@ -8,8 +8,12 @@ import ru.babin.autoproc.parser.avito.converter.AvitoCategoryConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoRegionConverter;
 
 public class AvitoLoader implements Loader{
-
-	private final String BASE_URL  = "http://www.avito.ru";
+	
+	public static final String PROVIDER_NAME = "AVITO";
+	public static final String PROVIDER_SITE = "www.avito.ru";
+	
+	
+	
 	
 	AvitoCategoryConverter catConverter = new AvitoCategoryConverter();
 	AvitoRegionConverter regConverter = new AvitoRegionConverter();
@@ -17,7 +21,7 @@ public class AvitoLoader implements Loader{
 	HttpRequester httpRequester = new HttpRequester();
 	
 	public Response loadData(Filter filter) {
-		String fullUrl = BASE_URL + "/" + 
+		String fullUrl = "http://" +  PROVIDER_SITE + "/" + 
 				regConverter.convert(filter.getRegion()) +  "/" +   
 				catConverter.convert(filter.getCategory())
 				;

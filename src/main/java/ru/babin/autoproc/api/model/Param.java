@@ -10,4 +10,8 @@ public class Param {
 		this.value = value;
 	}
 	
+	public String toString(){
+		return "{"+param.name() +"=" + value + "}";
+	}
+	
 }
