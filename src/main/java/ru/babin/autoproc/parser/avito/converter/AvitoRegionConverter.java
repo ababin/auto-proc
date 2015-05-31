@@ -7,6 +7,7 @@ public class AvitoRegionConverter implements RegionConverter{
 
 	public String convert(ERegion ereg) {
 		switch(ereg){
+		case RUSSIA	:	return "rossiya";
 		case MOSCOW	:	return "moskva";
 		}
 		throw new RuntimeException("Value " + ereg + " is not available for AvitoRegionConverter !");

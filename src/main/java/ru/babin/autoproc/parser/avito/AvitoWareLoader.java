@@ -8,17 +8,24 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import ru.babin.autoproc.api.filter.Filter;
+import ru.babin.autoproc.api.filter.AutoFilter;
+import ru.babin.autoproc.api.loader.WareLoader;
 import ru.babin.autoproc.api.model.EParam;
+import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.http.Response;
 
-public class AvitoParser {
+public class AvitoWareLoader implements WareLoader{
+
+	private AvitoHttpLoader httpLoader = new AvitoHttpLoader();
 	
-	AvitoLoader loader = new AvitoLoader();
-	
-	public List <Ware> parse(Filter f){
-		Response resp = loader.loadData(f);
+	@Override
+	public List<Ware> load(AutoFilter filter) {
+		return parse(filter);
+	}
+
+	private List <Ware> parse(AutoFilter f){
+		Response resp = httpLoader.doRequest(f);
 		
 		Document doc = Jsoup.parse(resp.result);
 		Elements elements = doc.select("div.item");
@@ -28,13 +35,13 @@ public class AvitoParser {
 		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
 			//System.out.println(element.html());
-			wares.add(parseElement(element));
+			wares.add(parseWare(element, f.getRegion()));
 		}
 		
 		return wares;
 	}
 	
-	private Ware parseElement(Element element){
+	private Ware parseWare(Element element, ERegion region){
 		Ware ware = new Ware();
 		
 		setProviderParams(ware);
@@ -44,6 +51,7 @@ public class AvitoParser {
 		parseDescShort(ware, element);
 		parsePrice(ware, element);
 		parseDateStr(ware, element);
+		parseCity(ware, element, region);
 		parseName(ware, element);
 		parseAdsNumber(ware, element);
 		
@@ -51,12 +59,24 @@ public class AvitoParser {
 	}
 	
 	private void setProviderParams(Ware ware){
-		ware.addParam(EParam.PROVIDER_NAME, AvitoLoader.PROVIDER_NAME);
-		ware.addParam(EParam.PROVIDER_SITE, AvitoLoader.PROVIDER_SITE);
+		ware.addParam(EParam.PROVIDER_NAME, AvitoHttpLoader.PROVIDER_NAME);
+		ware.addParam(EParam.PROVIDER_SITE, AvitoHttpLoader.PROVIDER_SITE);
 	}
 	
 	private void parseDateStr(Ware ware , Element element){
 		ware.addParam(EParam.DATE_STR, findValue(element, "div", "date c-2"));
+	}
+	
+	private void parseCity(Ware ware , Element element, ERegion region){
+		Element div = findElement(element, "div", "data");
+		if(div != null && div.children().size() > 0){
+			Element p_1 = div.child(1);
+			if(p_1.tagName().equals("p")){
+				ware.addParam(EParam.CITY, p_1.ownText());
+			}else{
+				ware.addParam(EParam.CITY, region.getReadableName());
+			}
+		}
 	}
 	
 	private void parseAdsUrl(Ware ware , Element element){
@@ -90,7 +110,7 @@ public class AvitoParser {
 	}
 	
 	private void parsePrice(Ware ware , Element element){
-		ware.addParam(EParam.PRICE, findValue(element, "div", "about"));
+		ware.addParam(EParam.PRICE_STR, findValue(element, "div", "about"));
 	}
 	
 	private String findValue(Element element, String tagName, String cssClass, String attrName){
@@ -131,7 +151,6 @@ public class AvitoParser {
 		}
 		return null;
 	}
-	
 	
 	
 }
