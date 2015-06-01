@@ -2,19 +2,19 @@ package ru.babin.autoproc.parser.avito.converter;
 
 import java.util.List;
 
-import ru.babin.autoproc.api.model.EAutoBodyType;
+import ru.babin.autoproc.api.model.EGearBoxType;
 
-public class AvitoBodyTypeConverter {
+public class AvitoGearBoxTypeConverter {
 	
-	private static final String FLAG_CODE = "187";
+	private static final String FLAG_CODE = "185";
 	
-	public String convert(List <EAutoBodyType> types){
+	public String convert(List <EGearBoxType> types){
 		if(types.isEmpty()){
 			return "";
 		}
 		StringBuilder b = new StringBuilder(FLAG_CODE + "_");
 		boolean first = true;
-		for(EAutoBodyType type : types){
+		for(EGearBoxType type : types){
 			if(first){
 				b.append(type.getId());
 				first = false;

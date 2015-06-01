@@ -40,9 +40,9 @@ public enum EParam {
 	DATE,	
 	
 	/**
-	 * Город
+	 * Место
 	 */
-	CITY,
+	PLACE,
 	
 	
 	PROVIDER_NAME,

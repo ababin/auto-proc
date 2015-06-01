@@ -8,6 +8,8 @@ import ru.babin.autoproc.api.filter.AutoFilter;
 import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
+import ru.babin.autoproc.api.model.EGearBoxType;
+import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
@@ -29,6 +31,9 @@ public class AvitoWareLoaderTest {
 		f.setModel(EModel.HYUNDAI___SOLARIS);
 		f.addAutoBodyType(EAutoBodyType.SEDAN);
 		f.setPersonality(EPersonality.PRIVATE);
+		f.setPrice(350000, 440000);
+		f.addGearBoxType(EGearBoxType.AUTOMAT);
+		f.setMileage(EMileAge.MA_10, EMileAge.MA_40);
 		
 		List <Ware> wares = wareLoader.load(f);
 		

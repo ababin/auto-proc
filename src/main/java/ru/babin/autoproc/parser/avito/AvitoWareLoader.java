@@ -72,9 +72,9 @@ public class AvitoWareLoader implements WareLoader{
 		if(div != null && div.children().size() > 0){
 			Element p_1 = div.child(1);
 			if(p_1.tagName().equals("p")){
-				ware.addParam(EParam.CITY, p_1.ownText());
+				ware.addParam(EParam.PLACE, p_1.ownText());
 			}else{
-				ware.addParam(EParam.CITY, region.getReadableName());
+				ware.addParam(EParam.PLACE, region.getReadableName());
 			}
 		}
 	}
