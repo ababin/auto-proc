@@ -14,7 +14,7 @@ public class AvitoMileAgeConverter {
 			mileageTo = EMileAge.MA_500;
 		}
 		
-		return FLAG_CODE + "_" + mileageFrom.getId() + "b" + mileageTo.getId();		
+		return FLAG_CODE + "_" + mileageFrom.getCode() + "b" + mileageTo.getCode();		
 	}
 	
 }

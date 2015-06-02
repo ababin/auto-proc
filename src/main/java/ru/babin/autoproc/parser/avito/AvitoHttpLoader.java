@@ -14,6 +14,7 @@ import ru.babin.autoproc.parser.avito.converter.AvitoGearBoxTypeConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoMileAgeConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoModelConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoRegionConverter;
+import ru.babin.autoproc.parser.avito.converter.AvitoYearConverter;
 
 public class AvitoHttpLoader implements HttpLoader{
 	
@@ -28,6 +29,7 @@ public class AvitoHttpLoader implements HttpLoader{
 	AvitoBodyTypeConverter bodyTypeConverter = new AvitoBodyTypeConverter();
 	AvitoGearBoxTypeConverter gearBoxTypeConverter = new AvitoGearBoxTypeConverter();
 	AvitoMileAgeConverter mileAgeConverter = new AvitoMileAgeConverter();
+	AvitoYearConverter yearConverter = new AvitoYearConverter();
 	
 	HttpRequester httpRequester = new HttpRequester();
 	
@@ -78,6 +80,9 @@ public class AvitoHttpLoader implements HttpLoader{
 		
 		// mileAge parameters
 		paramValues.add(mileAgeConverter.convert(filter.getMileageFrom(), filter.getMileageTo()));
+		
+		// year parameters
+		paramValues.add(yearConverter.convert(filter.getYearFrom(), filter.getYearTo()));
 		
 		
 		String splitParamValues = splitParams(paramValues, ".");

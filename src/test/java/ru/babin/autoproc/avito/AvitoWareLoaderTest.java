@@ -13,6 +13,7 @@ import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
+import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.parser.avito.AvitoWareLoader;
 
@@ -34,6 +35,7 @@ public class AvitoWareLoaderTest {
 		f.setPrice(350000, 440000);
 		f.addGearBoxType(EGearBoxType.AUTOMAT);
 		f.setMileage(EMileAge.MA_10, EMileAge.MA_40);
+		f.setYearFrom(EYear.YEAR_2010);
 		
 		List <Ware> wares = wareLoader.load(f);
 		

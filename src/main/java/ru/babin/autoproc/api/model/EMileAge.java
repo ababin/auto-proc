@@ -39,19 +39,19 @@ public enum EMileAge {
 	
 	
 	private String readableName;
-	private int id;
+	private int code;
 	
 	private EMileAge(String n, int id){
 		readableName = n; 
-		this.id = id;
+		this.code = id;
 	}
 
 	public String getReadableName() {
 		return readableName;
 	}
 	
-	public int getId() {
-		return id;
+	public int getCode() {
+		return code;
 	}
 	
 	

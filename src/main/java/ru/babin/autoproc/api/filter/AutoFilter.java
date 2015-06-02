@@ -11,6 +11,7 @@ import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
+import ru.babin.autoproc.api.model.EYear;
 
 public class AutoFilter {
 	
@@ -35,6 +36,10 @@ public class AutoFilter {
 	private EMileAge mileageFrom = EMileAge.MA_0;
 	
 	private EMileAge mileageTo = EMileAge.MA_500;
+	
+	private EYear yearFrom = EYear.YEAR_1960;
+	
+	private EYear yearTo = EYear.YEAR_2015;
 	
 	public ERegion getRegion() {
 		return region;
@@ -132,6 +137,27 @@ public class AutoFilter {
 	public void setMileage(EMileAge mileageFrom, EMileAge mileageTo){
 		this.mileageFrom = mileageFrom;
 		this.mileageTo = mileageTo;
+	}
+
+	public EYear getYearFrom() {
+		return yearFrom;
+	}
+
+	public void setYearFrom(EYear yearFrom) {
+		this.yearFrom = yearFrom;
+	}
+
+	public EYear getYearTo() {
+		return yearTo;
+	}
+
+	public void setYearTo(EYear yearTo) {
+		this.yearTo = yearTo;
+	}
+	
+	public void setYear(EYear yearFrom , EYear yearTo){
+		this.yearFrom = yearFrom;
+		this.yearTo = yearTo;
 	}
 	
 }
