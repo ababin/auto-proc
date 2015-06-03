@@ -1,4 +1,4 @@
-package ru.babin.autoproc.parser.avito;
+package ru.babin.autoproc.impl.avito.parser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,15 +7,15 @@ import ru.babin.autoproc.api.filter.AutoFilter;
 import ru.babin.autoproc.api.loader.HttpLoader;
 import ru.babin.autoproc.http.HttpRequester;
 import ru.babin.autoproc.http.Response;
-import ru.babin.autoproc.parser.avito.converter.AvitoAgeTypeConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoBodyTypeConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoBrandConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoCategoryConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoGearBoxTypeConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoMileAgeConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoModelConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoRegionConverter;
-import ru.babin.autoproc.parser.avito.converter.AvitoYearConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoAgeTypeConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoBodyTypeConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoBrandConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoCategoryConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoGearBoxTypeConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoMileAgeConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoModelConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoRegionConverter;
+import ru.babin.autoproc.impl.avito.parser.converter.AvitoYearConverter;
 
 public class AvitoHttpLoader implements HttpLoader{
 	

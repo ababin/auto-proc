@@ -1,4 +1,4 @@
-package ru.babin.autoproc.parser.avito.converter;
+package ru.babin.autoproc.impl.avito.parser.converter;
 
 import ru.babin.autoproc.api.model.EModel;
 

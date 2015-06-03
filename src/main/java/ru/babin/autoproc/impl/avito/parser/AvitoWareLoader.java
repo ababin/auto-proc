@@ -1,4 +1,4 @@
-package ru.babin.autoproc.parser.avito;
+package ru.babin.autoproc.impl.avito.parser;
 
 import java.util.LinkedList;
 import java.util.List;

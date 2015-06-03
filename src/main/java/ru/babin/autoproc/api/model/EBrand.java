@@ -143,6 +143,17 @@ public enum EBrand {
 	UAZ("УАЗ"),
 	DRUGAYA("Другая"),
 	
+	
+	_FOREIGN("Иномарки"),
+	_NATIVE("Отечественные"),
+	_EUROPE("Европейские"),
+	_JAPAN("Японские"),
+	_KOREA("Корейские"),
+	_USA("Американские"),
+	_CHINA("Китайские"),
+	_EXCLUDE_CHINA("Кроме китайских"),
+		
+	
 	;
 	
 	private String readableName;

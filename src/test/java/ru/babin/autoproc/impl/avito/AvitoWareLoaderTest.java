@@ -1,4 +1,4 @@
-package ru.babin.autoproc.avito;
+package ru.babin.autoproc.impl.avito;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
-import ru.babin.autoproc.parser.avito.AvitoWareLoader;
+import ru.babin.autoproc.impl.avito.parser.AvitoWareLoader;
 
 public class AvitoWareLoaderTest {
 	

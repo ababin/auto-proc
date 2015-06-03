@@ -1,4 +1,4 @@
-package ru.babin.autoproc.util.avito;
+package ru.babin.autoproc.impl.avito.util;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -14,7 +14,7 @@ import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.http.Response;
-import ru.babin.autoproc.parser.avito.AvitoHttpLoader;
+import ru.babin.autoproc.impl.avito.parser.AvitoHttpLoader;
 
 public class AutoModelsParser {
 	

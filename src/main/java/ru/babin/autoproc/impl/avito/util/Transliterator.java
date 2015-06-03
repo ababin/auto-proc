@@ -1,4 +1,4 @@
-package ru.babin.autoproc.util.avito;
+package ru.babin.autoproc.impl.avito.util;
 
 public class Transliterator {
 	

@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 
-import ru.babin.autoproc.util.avito.AutoModelsParser;
+import ru.babin.autoproc.impl.avito.util.AutoModelsParser;
 
 public class AutoModelsParserTest {
 
