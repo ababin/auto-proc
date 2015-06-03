@@ -3,6 +3,7 @@ package ru.babin.autoproc.api.filter;
 import java.util.LinkedList;
 import java.util.List;
 
+import ru.babin.autoproc.api.model.EAgeType;
 import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
@@ -40,6 +41,8 @@ public class AutoFilter {
 	private EYear yearFrom = EYear.YEAR_1960;
 	
 	private EYear yearTo = EYear.YEAR_2015;
+	
+	private EAgeType ageType = null;
 	
 	public ERegion getRegion() {
 		return region;
@@ -158,6 +161,14 @@ public class AutoFilter {
 	public void setYear(EYear yearFrom , EYear yearTo){
 		this.yearFrom = yearFrom;
 		this.yearTo = yearTo;
+	}
+
+	public EAgeType getAgeType() {
+		return ageType;
+	}
+
+	public void setAgeType(EAgeType ageType) {
+		this.ageType = ageType;
 	}
 	
 }

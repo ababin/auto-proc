@@ -7,6 +7,7 @@ import ru.babin.autoproc.api.filter.AutoFilter;
 import ru.babin.autoproc.api.loader.HttpLoader;
 import ru.babin.autoproc.http.HttpRequester;
 import ru.babin.autoproc.http.Response;
+import ru.babin.autoproc.parser.avito.converter.AvitoAgeTypeConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoBodyTypeConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoBrandConverter;
 import ru.babin.autoproc.parser.avito.converter.AvitoCategoryConverter;
@@ -30,13 +31,16 @@ public class AvitoHttpLoader implements HttpLoader{
 	AvitoGearBoxTypeConverter gearBoxTypeConverter = new AvitoGearBoxTypeConverter();
 	AvitoMileAgeConverter mileAgeConverter = new AvitoMileAgeConverter();
 	AvitoYearConverter yearConverter = new AvitoYearConverter();
+	AvitoAgeTypeConverter ageTypeConverter = new AvitoAgeTypeConverter();
 	
 	HttpRequester httpRequester = new HttpRequester();
 	
 	public Response doRequest(AutoFilter filter) {
 		String fullUrl = "http://" +  PROVIDER_SITE + 
 				"/" + regConverter.convert(filter.getRegion()) +  
-				"/" + catConverter.convert(filter.getCategory()) + 
+				"/" + catConverter.convert(filter.getCategory()) +
+				
+				(filter.getAgeType() != null ? "/" + ageTypeConverter.convert(filter.getAgeType()) : "") +
 				(filter.getBrand() != null ? "/" + brandConverter.convert(filter.getBrand()) : "") + 
 				(filter.getModel() != null ? "/" + modelConverter.convert(filter.getModel()) : "") +
 				prepareParams(filter)

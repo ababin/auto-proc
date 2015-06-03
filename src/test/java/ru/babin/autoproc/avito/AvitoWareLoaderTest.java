@@ -5,12 +5,14 @@ import java.util.List;
 import org.junit.Test;
 
 import ru.babin.autoproc.api.filter.AutoFilter;
+import ru.babin.autoproc.api.model.EAgeType;
 import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.EGearBoxType;
 import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
+import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.EYear;
@@ -36,11 +38,16 @@ public class AvitoWareLoaderTest {
 		f.addGearBoxType(EGearBoxType.AUTOMAT);
 		f.setMileage(EMileAge.MA_10, EMileAge.MA_40);
 		f.setYearFrom(EYear.YEAR_2010);
+		f.setAgeType(EAgeType.WITH_MILEAGE);
 		
 		List <Ware> wares = wareLoader.load(f);
 		
 		for(Ware w : wares){
-			System.out.println(w);
+			System.out.println(
+					w.getParam(EParam.NAME) + "   " + 
+					w.getParam(EParam.DESC_SHORT) + "   " + 
+					w.getParam(EParam.PRICE_STR) + "    " + 
+					w.getParam(EParam.ADS_URL)); 
 		}
 	}
 	
