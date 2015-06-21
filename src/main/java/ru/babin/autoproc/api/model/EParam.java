@@ -44,6 +44,16 @@ public enum EParam {
 	 */
 	PLACE,
 	
+	/**
+	 * Пробег
+	 */
+	MILE_AGE_STR,
+	
+	/**
+	 * Год
+	 */
+	YEAR,
+	
 	
 	PROVIDER_NAME,
 	PROVIDER_SITE,	

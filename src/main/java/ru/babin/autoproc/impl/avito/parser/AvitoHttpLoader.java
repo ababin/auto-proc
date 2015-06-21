@@ -83,7 +83,7 @@ public class AvitoHttpLoader implements HttpLoader{
 		paramValues.add(gearBoxTypeConverter.convert(filter.getGearBoxTypes()));
 		
 		// mileAge parameters
-		paramValues.add(mileAgeConverter.convert(filter.getMileageFrom(), filter.getMileageTo()));
+		paramValues.add(mileAgeConverter.convert(filter.getMileAgeFrom(), filter.getMileageTo()));
 		
 		// year parameters
 		paramValues.add(yearConverter.convert(filter.getYearFrom(), filter.getYearTo()));

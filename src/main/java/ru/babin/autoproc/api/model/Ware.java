@@ -21,6 +21,42 @@ public class Ware {
 		params.add(p);
 	}
 	
+	public String getName(){
+		return getParam(EParam.NAME);
+	}
+	
+	public String getPrice(){
+		return getParam(EParam.PRICE_STR);
+	}
+	
+	public String getDescShort(){
+		return getParam(EParam.DESC_SHORT);
+	}
+	
+	public String getImageUrl(){
+		return getParam(EParam.IMAGE_URL);
+	}
+	
+	public String getAdsUrl(){
+		return getParam(EParam.ADS_URL);
+	}
+	
+	public String getProviderSite(){
+		return getParam(EParam.PROVIDER_SITE);
+	}
+	
+	public String getDateStr(){
+		return getParam(EParam.DATE_STR);
+	}
+	
+	public String getMileAgeStr(){
+		return getParam(EParam.MILE_AGE_STR);
+	}
+	
+	public String getYear(){
+		return getParam(EParam.YEAR);
+	}
+	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(getClass().getSimpleName() + "{");

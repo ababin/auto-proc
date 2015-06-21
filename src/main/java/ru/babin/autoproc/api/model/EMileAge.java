@@ -34,7 +34,7 @@ public enum EMileAge {
 	MA_350("350 тыс км", 15565),
 	MA_400("400 тыс км", 15570),
 	MA_450("450 тыс км", 15575),
-	MA_500("500 тыс км", 15581),
+	MA_500("500+ тыс км", 15581),
 	;
 	
 	
@@ -52,6 +52,12 @@ public enum EMileAge {
 	
 	public int getCode() {
 		return code;
+	}
+	
+	public int getMiles(){
+		String [] ar = this.name().split("_");
+		int miles = Integer.valueOf(ar[1]);
+		return miles * 1000;
 	}
 	
 	

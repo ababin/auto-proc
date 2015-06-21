@@ -50,4 +50,16 @@ public enum EYear {
 	public int getCode(){
 		return code;
 	}
+	
+	public static EYear fromYear(Integer year){
+		if(year == null){
+			return EYear.YEAR_1960;
+		}
+		for(EYear y : EYear.values()){
+			if(y.year >= year){
+				return y;
+			}
+		}
+		return EYear.YEAR_2015;
+	}
 }

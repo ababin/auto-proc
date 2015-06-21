@@ -1,6 +1,7 @@
 package ru.babin.autoproc.impl.avito.parser.converter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ru.babin.autoproc.api.model.EGearBoxType;
 
@@ -8,21 +9,42 @@ public class AvitoGearBoxTypeConverter {
 	
 	private static final String FLAG_CODE = "185";
 	
-	public String convert(List <EGearBoxType> types){
-		if(types.isEmpty()){
+	public String convert(Set <EGearBoxType> gearsIn){
+		if(gearsIn == null || gearsIn.isEmpty()){
 			return "";
 		}
-		StringBuilder b = new StringBuilder(FLAG_CODE + "_");
-		boolean first = true;
+		Set <EGearBoxType> types = normalize(gearsIn);
+		
+		StringBuilder b = new StringBuilder();
 		for(EGearBoxType type : types){
-			if(first){
-				b.append(type.getId());
-				first = false;
+			b.append(b.length() == 0 ? getCode(type) : "-" + getCode(type));
+		}
+		return FLAG_CODE + "_" + b.toString();
+	}
+	
+	private Set<EGearBoxType> normalize(Set<EGearBoxType> gearsIn) {
+		Set <EGearBoxType> set = new HashSet<>();
+		for(EGearBoxType gear : gearsIn){
+			if(gear == EGearBoxType.AUTOMAT){
+				set.add(EGearBoxType.AUTOMAT_AUTOMATIC);
+				set.add(EGearBoxType.AUTOMAT_ROBOT);
+				set.add(EGearBoxType.AUTOMAT_VARIATOR);
 			}else{
-				b.append("-" + type.getId());
+				set.add(gear);
 			}
 		}
-		return b.toString();
+		return set;
+	}
+
+	public String getCode(EGearBoxType e){
+		switch(e){
+		case MECHANIC			:	return "861";
+		case AUTOMAT_AUTOMATIC	:	return "860";
+		case AUTOMAT_ROBOT		:	return "14754";
+		case AUTOMAT_VARIATOR	:	return "14753";
+		default 				:	throw new RuntimeException("Value " + e + " was not found for AvitoGearBoxTypeConverter !");	
+		}
+		
 	}
 	
 }

@@ -2,6 +2,8 @@ package ru.babin.autoproc.api.model;
 
 public enum EBrand {
 	
+	_ANY("Любая"),
+	
 	AC("AC"),
 	ACURA("Acura"),
 	ALFA_ROMEO("Alfa Romeo"),

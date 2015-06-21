@@ -2,9 +2,10 @@ package ru.babin.autoproc.api.model;
 
 public enum EAgeType {
 	
+	ALL("Все"),
 	NEW("Новые"),
 	WITH_MILEAGE("С пробегом"),
-	ALL("Все"),
+	
 			
 	;
 	

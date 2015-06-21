@@ -1,4 +1,4 @@
-package ru.babin.autoproc.impl.auto_ru.parser.converter;
+package ru.babin.autoproc.impl.autoru.parser.converter;
 
 import ru.babin.autoproc.api.converter.CategoryConverter;
 import ru.babin.autoproc.api.model.ECategory;

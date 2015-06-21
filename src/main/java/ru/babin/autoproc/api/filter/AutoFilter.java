@@ -1,7 +1,9 @@
 package ru.babin.autoproc.api.filter;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import ru.babin.autoproc.api.model.EAgeType;
 import ru.babin.autoproc.api.model.EAutoBodyType;
@@ -21,12 +23,13 @@ public class AutoFilter {
 	private ECategory category;
 	
 	private EBrand brand;
+	private String brandVal;
 	
 	private EModel model;
 
 	private List<EAutoBodyType> autoBodyTypes = new LinkedList <>();
 	
-	private List<EGearBoxType> gearBoxTypes = new LinkedList <>();
+	private Set<EGearBoxType> gearBoxTypes = new HashSet <>();
 	
 	private EPersonality personality = EPersonality.ALL; 
 	
@@ -42,7 +45,7 @@ public class AutoFilter {
 	
 	private EYear yearTo = EYear.YEAR_2015;
 	
-	private EAgeType ageType = null;
+	private EAgeType ageType = EAgeType.ALL;
 	
 	public ERegion getRegion() {
 		return region;
@@ -113,7 +116,7 @@ public class AutoFilter {
 		this.priceTo = priceTo;
 	}
 
-	public List<EGearBoxType> getGearBoxTypes() {
+	public Set<EGearBoxType> getGearBoxTypes() {
 		return gearBoxTypes;
 	}
 
@@ -121,11 +124,11 @@ public class AutoFilter {
 		gearBoxTypes.add(t);
 	}
 
-	public EMileAge getMileageFrom() {
+	public EMileAge getMileAgeFrom() {
 		return mileageFrom;
 	}
 
-	public void setMileageFrom(EMileAge mileageFrom) {
+	public void setMileAgeFrom(EMileAge mileageFrom) {
 		this.mileageFrom = mileageFrom;
 	}
 
@@ -133,7 +136,7 @@ public class AutoFilter {
 		return mileageTo;
 	}
 
-	public void setMileageTo(EMileAge mileageTo) {
+	public void setMileAgeTo(EMileAge mileageTo) {
 		this.mileageTo = mileageTo;
 	}
 	
@@ -169,6 +172,14 @@ public class AutoFilter {
 
 	public void setAgeType(EAgeType ageType) {
 		this.ageType = ageType;
+	}
+
+	public String getBrandVal() {
+		return brandVal;
+	}
+
+	public void setBrandVal(String brandVal) {
+		this.brandVal = brandVal;
 	}
 	
 }

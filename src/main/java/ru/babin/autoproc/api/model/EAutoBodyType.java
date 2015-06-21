@@ -4,8 +4,13 @@ public enum EAutoBodyType {
 	
 	SEDAN("Седан", 869),
 	HETCHBEK("Хетчбэк" , 872),
+	HETCHBEK_3("Хетчбэк" , 872),
+	HETCHBEK_5("Хетчбэк" , 872),
+	HETCHBEK_LIFTBACK("Хетчбэк" , 872),
 	UNIVERSAL("Универсал", 870),
 	VNEDOROZHNIK("Внедорожник", 4804),
+	VNEDOROZHNIK_3("Внедорожник", 4804),
+	VNEDOROZHNIK_5("Внедорожник", 4804),
 	KABRIOLET("Кабриолет", 865),
 	KROSSOVER("Кроссовер", 4805),
 	KUPE("Купе",866),
@@ -14,6 +19,7 @@ public enum EAutoBodyType {
 	PIKAP("Пикап",868),
 	FURGON("Фургон", 871),
 	MIKROAVTOBUS("Микроавтобус",11695),
+	
 	
 	;
 	

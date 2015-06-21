@@ -1,0 +1,18 @@
+AUTO.RU
+
+Элемент списка: 
+
+
+NAME          :  Kia Rio II Рестайлинг
+DESC_SHORT    : Синий седан, 1.4 MT (97 л.с.) бензин, передний
+PRICE_STR     : 350 000 Р
+DATE_STR      : 25 мая
+DATE          : ...
+
+ADS_NUMBER    : 1013515423-2f19f
+ADS_URL       : http://auto.ru/cars/used/sale/1013515423-2f19f/
+IMAGE_URL     : http://is9.autoi.ru/all/images/fe/19/135x100/fe1917b4.jpg
+PLACE         : Москва
+PROVIDER_NAME : auto.ru
+PROVIDER_SITE : auto.ru
+

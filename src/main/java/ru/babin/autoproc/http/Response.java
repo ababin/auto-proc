@@ -13,4 +13,8 @@ public class Response {
 		this.code = code;
 		result = null;
 	}
+	
+	public boolean isOK(){
+		return code == 200;
+	}
 }
