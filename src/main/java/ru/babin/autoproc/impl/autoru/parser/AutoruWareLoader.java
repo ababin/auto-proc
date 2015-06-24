@@ -10,16 +10,27 @@ import org.jsoup.select.Elements;
 
 import ru.babin.autoproc.api.filter.AutoFilter;
 import ru.babin.autoproc.api.loader.WareLoader;
+import ru.babin.autoproc.api.model.AutoDesc;
 import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.ERegion;
+import ru.babin.autoproc.api.model.MarkAndModel;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.http.Response;
+import ru.babin.autoproc.impl.autoru.parser.converter.AutoruAutoDescConverter;
+import ru.babin.autoproc.impl.autoru.parser.converter.AutoruDateConverter;
+import ru.babin.autoproc.impl.autoru.parser.converter.AutoruMarkAndModelConverter;
 
 public class AutoruWareLoader implements WareLoader{
 
 	private AutoruHttpLoader httpLoader = new AutoruHttpLoader();
 	
 	private AutoruPhoneLoader phoneLoader = new AutoruPhoneLoader();
+	
+	private AutoruDateConverter dateConverter = new AutoruDateConverter();
+	
+	private AutoruMarkAndModelConverter markAndModelConverter = new AutoruMarkAndModelConverter();
+	
+	private AutoruAutoDescConverter autoDescConverter = new AutoruAutoDescConverter();
 	
 	@Override
 	public List<Ware> load(AutoFilter filter) {
@@ -35,8 +46,7 @@ public class AutoruWareLoader implements WareLoader{
 		
 		List <Ware> wares = new LinkedList<>();
 		
-		//for(int  i =0 ; i < elements.size(); i++){
-		for(int  i =0 ; i < 3; i++){
+		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
 			//System.out.println(element.html());
 			Ware ware = parseWare(element, f.getRegion());
@@ -86,6 +96,8 @@ public class AutoruWareLoader implements WareLoader{
 	
 	private void parseDateStr(Ware ware , Element element){
 		ware.addParam(EParam.DATE_STR, findValue(element, "div", "sales-list-date"));
+		String dateStr = ware.getParam(EParam.DATE_STR);
+		ware.addParam(EParam.DATE, String.valueOf(dateConverter.convert(dateStr)));
 	}
 	
 	private void parseCity(Ware ware , Element element, ERegion region){
@@ -109,6 +121,9 @@ public class AutoruWareLoader implements WareLoader{
 	
 	private void parseName(Ware ware , Element element){
 		ware.addParam(EParam.NAME, getName(element));
+		MarkAndModel mam = markAndModelConverter.convert(ware);
+		ware.addParam(EParam.MARK, mam.mark);
+		ware.addParam(EParam.MODEL, mam.model);
 	}
 	
 	private void parseAdsNumber(Ware ware , Element element){
@@ -128,6 +143,17 @@ public class AutoruWareLoader implements WareLoader{
 		String commonDesc = findValue(element, "td","sales-list-cell sales-list-cell_mark_id");
 		String res = bodyTypeAndColor + " " + commonDesc;
 		ware.addParam(EParam.DESC_SHORT, res);
+		
+		AutoDesc ad = autoDescConverter.convert(ware);
+				
+		ware.addParam(EParam.BODY_TYPE, ad.getBodyType());
+		ware.addParam(EParam.COLOR, ad.getColor());
+		ware.addParam(EParam.DRIVING_GEAR, ad.getDrivingGear());
+		ware.addParam(EParam.ENGINE_VOLUME, String.valueOf(ad.getEngineVolume()));
+		ware.addParam(EParam.FUEL, String.valueOf(ad.getFuel()));
+		ware.addParam(EParam.GEAR_BOX_TYPE, String.valueOf(ad.getGearBoxType()));
+		ware.addParam(EParam.HORSES, String.valueOf(ad.getHorses()));
+				
 	}
 	
 	private String getName(Element element){

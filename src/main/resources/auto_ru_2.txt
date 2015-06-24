@@ -16,3 +16,13 @@ PLACE         : Москва
 PROVIDER_NAME : auto.ru
 PROVIDER_SITE : auto.ru
 
+
+Названия марок, состоящие из ДВУХ и более слов:
+
+Alfa Romeo
+Aston Martin
+Great Wall
+Iran Khodro
+Land Rover
+Xin Kai
+ВАЗ (Lada)

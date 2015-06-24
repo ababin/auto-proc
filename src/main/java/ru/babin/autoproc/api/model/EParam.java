@@ -2,6 +2,18 @@ package ru.babin.autoproc.api.model;
 
 public enum EParam {
 	
+	MARK,
+	MODEL,
+	
+	BODY_TYPE,
+	COLOR,
+	// привод
+	DRIVING_GEAR,
+	ENGINE_VOLUME,
+	FUEL,
+	GEAR_BOX_TYPE,
+	HORSES,
+	
 	/**
 	 * Номер объявления
 	 */

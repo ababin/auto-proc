@@ -1,5 +1,9 @@
 package ru.babin.autoproc.impl.autoru;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -21,6 +25,8 @@ import ru.babin.autoproc.impl.autoru.parser.AutoruWareLoader;
 public class AutoruWareLoaderTest {
 	
 	AutoruWareLoader wareLoader = new AutoruWareLoader();
+	
+	DateFormat df = new SimpleDateFormat("dd.MM");
 	
 	//@Test
 	public void test_loadData(){
@@ -59,27 +65,57 @@ public class AutoruWareLoaderTest {
 		f.setPersonality(EPersonality.PRIVATE);
 		f.setYear(EYear.YEAR_2015, EYear.YEAR_2015);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
-		f.setNeedPhone(true);
-		f.setPage(1);
-								
-		List <Ware> wares = wareLoader.load(f);
+		//f.setNeedPhone(true);
+		
+		List <Ware> allWares = new LinkedList<>();
+		
+		for(int page = 1; page < 141 ; page++){
+			System.out.println("PAGE " + page + " : *********************************************************************************");
+			f.setPage(page);
+			
+			List <Ware> wares = wareLoader.load(f);
+			if(wares.isEmpty()){
+				break;
+			}
+			allWares.addAll(wares);
+			
+		}
+			
+		
 		
 		long dEnd = System.currentTimeMillis();
 		
-		for(Ware w : wares){
+		for(Ware w : allWares){
 			System.out.println(
-					w.getParam(EParam.DATE_STR) + "     " + 
-					w.getParam(EParam.NAME) + "   " + 
-					w.getParam(EParam.DESC_SHORT) + "   " + 
+					getFormatDate(Long.valueOf(w.getParam(EParam.DATE))) + "    " +  
+					w.getParam(EParam.MARK) + " *** " +
+					w.getParam(EParam.MODEL) + "                             " +
+					
+					w.getParam(EParam.COLOR) + " & " + 
+					w.getParam(EParam.BODY_TYPE) + " & " +
+					w.getParam(EParam.DRIVING_GEAR) + " & " +
+					w.getParam(EParam.ENGINE_VOLUME) + " & " +
+					w.getParam(EParam.FUEL) + " & " +
+					w.getParam(EParam.GEAR_BOX_TYPE) + " & " +
+					w.getParam(EParam.HORSES) + "           " +
+					
+					
+
+					/* w.getParam(EParam.DESC_SHORT) + "   " + */ 
 					w.getParam(EParam.PRICE_STR) + "    " + 
-					w.getParam(EParam.ADS_URL) + "    " +
-					w.getParam(EParam.PHONE));
+					w.getParam(EParam.ADS_URL) + "    "  
+					//w.getParam(EParam.PHONE));
+					);
 		}
 		long ms = dEnd - dBegin;
 		System.out.println("---------------------------------------------------------------");
-		System.out.println("Total wares: " + wares.size() + " during " + ms);
-		long speed = ms / wares.size();
+		System.out.println("Total wares: " + allWares.size() + " during " + ms);
+		long speed = ms / allWares.size();
 		System.out.println("Speed: " + speed + " ms/record");
+	}
+	
+	private String getFormatDate(long date){
+		return df.format(new Date(date));
 	}
 	
 }
