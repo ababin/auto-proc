@@ -54,6 +54,8 @@ public class AutoruWareLoaderTest {
 		
 		AutoFilter f = new AutoFilter();
 		
+		long dBegin = System.currentTimeMillis();
+		
 		f.setPersonality(EPersonality.PRIVATE);
 		f.setYear(EYear.YEAR_2015, EYear.YEAR_2015);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
@@ -62,14 +64,22 @@ public class AutoruWareLoaderTest {
 								
 		List <Ware> wares = wareLoader.load(f);
 		
+		long dEnd = System.currentTimeMillis();
+		
 		for(Ware w : wares){
 			System.out.println(
 					w.getParam(EParam.DATE_STR) + "     " + 
 					w.getParam(EParam.NAME) + "   " + 
 					w.getParam(EParam.DESC_SHORT) + "   " + 
 					w.getParam(EParam.PRICE_STR) + "    " + 
-					w.getParam(EParam.ADS_URL)); 
+					w.getParam(EParam.ADS_URL) + "    " +
+					w.getParam(EParam.PHONE));
 		}
+		long ms = dEnd - dBegin;
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("Total wares: " + wares.size() + " during " + ms);
+		long speed = ms / wares.size();
+		System.out.println("Speed: " + speed + " ms/record");
 	}
 	
 }

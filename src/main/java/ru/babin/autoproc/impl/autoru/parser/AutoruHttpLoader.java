@@ -130,7 +130,7 @@ public class AutoruHttpLoader implements HttpLoader{
 		
 		String splitParamsString = splitParams(params, "&"); 
 		
-		return splitParamsString.isEmpty() ? "" : "?"+splitParamsString;
+		return splitParamsString.isEmpty() ? "" : splitParamsString;
 	}
 		
 	
