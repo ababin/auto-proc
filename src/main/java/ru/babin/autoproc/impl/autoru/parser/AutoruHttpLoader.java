@@ -38,7 +38,6 @@ public class AutoruHttpLoader implements HttpLoader{
 			
 	public Response doRequest(AutoFilter filter) {
 		String fullUrl = SEARCH_URL.replace("{ageType}", ageTypeConverter.convert(filter.getAgeType())) + "&" + prepareParams(filter);
-		System.out.println("URL : " + fullUrl);
 		return httpRequester.request(fullUrl); 
 	}
 	

@@ -35,7 +35,8 @@ public class AutoruWareLoader implements WareLoader{
 		
 		List <Ware> wares = new LinkedList<>();
 		
-		for(int  i =0 ; i < elements.size(); i++){
+		//for(int  i =0 ; i < elements.size(); i++){
+		for(int  i =0 ; i < 3; i++){
 			Element element = elements.get(i);
 			//System.out.println(element.html());
 			Ware ware = parseWare(element, f.getRegion());
