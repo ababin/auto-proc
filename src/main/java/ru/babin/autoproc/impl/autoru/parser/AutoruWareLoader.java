@@ -19,6 +19,8 @@ public class AutoruWareLoader implements WareLoader{
 
 	private AutoruHttpLoader httpLoader = new AutoruHttpLoader();
 	
+	private AutoruPhoneLoader phoneLoader = new AutoruPhoneLoader();
+	
 	@Override
 	public List<Ware> load(AutoFilter filter) {
 		return parse(filter);
@@ -36,7 +38,11 @@ public class AutoruWareLoader implements WareLoader{
 		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
 			//System.out.println(element.html());
-			wares.add(parseWare(element, f.getRegion()));
+			Ware ware = parseWare(element, f.getRegion());
+			if(f.isNeedPhone()){
+				phoneLoader.load(ware);
+			}
+			wares.add(ware);
 		}
 		
 		return wares;

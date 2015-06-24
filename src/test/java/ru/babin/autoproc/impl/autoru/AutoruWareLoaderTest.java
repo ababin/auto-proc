@@ -1,4 +1,4 @@
-package ru.babin.autoproc.impl.auto_ru;
+package ru.babin.autoproc.impl.autoru;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class AutoruWareLoaderTest {
 	
 	AutoruWareLoader wareLoader = new AutoruWareLoader();
 	
-	@Test
+	//@Test
 	public void test_loadData(){
 		
 		AutoFilter f = new AutoFilter();
@@ -37,6 +37,29 @@ public class AutoruWareLoaderTest {
 		f.addGearBoxType(EGearBoxType.AUTOMAT);
 		f.setMileAgeTo(EMileAge.MA_70);
 				
+		List <Ware> wares = wareLoader.load(f);
+		
+		for(Ware w : wares){
+			System.out.println(
+					w.getParam(EParam.DATE_STR) + "     " + 
+					w.getParam(EParam.NAME) + "   " + 
+					w.getParam(EParam.DESC_SHORT) + "   " + 
+					w.getParam(EParam.PRICE_STR) + "    " + 
+					w.getParam(EParam.ADS_URL)); 
+		}
+	}
+	
+	@Test
+	public void test_loadFullData(){
+		
+		AutoFilter f = new AutoFilter();
+		
+		f.setPersonality(EPersonality.PRIVATE);
+		f.setYear(EYear.YEAR_2015, EYear.YEAR_2015);
+		f.setAgeType(EAgeType.WITH_MILEAGE);
+		f.setNeedPhone(true);
+		f.setPage(1);
+								
 		List <Ware> wares = wareLoader.load(f);
 		
 		for(Ware w : wares){

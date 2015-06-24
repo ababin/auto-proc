@@ -47,6 +47,10 @@ public class AutoFilter {
 	
 	private EAgeType ageType = EAgeType.ALL;
 	
+	private int page = 1;
+	
+	private boolean needPhone = false;
+	
 	public ERegion getRegion() {
 		return region;
 	}
@@ -180,6 +184,22 @@ public class AutoFilter {
 
 	public void setBrandVal(String brandVal) {
 		this.brandVal = brandVal;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public boolean isNeedPhone() {
+		return needPhone;
+	}
+
+	public void setNeedPhone(boolean needPhone) {
+		this.needPhone = needPhone;
 	}
 	
 }

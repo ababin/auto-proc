@@ -1,4 +1,4 @@
-package ru.babin.autoproc.impl.auto_ru;
+package ru.babin.autoproc.impl.autoru;
 
 import org.junit.Test;
 

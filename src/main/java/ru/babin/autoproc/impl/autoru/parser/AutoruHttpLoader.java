@@ -16,13 +16,11 @@ import ru.babin.autoproc.impl.autoru.parser.converter.AutoruCategoryConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruGearBoxTypeConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruPersonalityConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruRegionConverter;
-import ru.babin.autoproc.impl.avito.parser.converter.AvitoBodyTypeConverter;
-import ru.babin.autoproc.impl.avito.parser.converter.AvitoGearBoxTypeConverter;
-import ru.babin.autoproc.impl.avito.parser.converter.AvitoMileAgeConverter;
-import ru.babin.autoproc.impl.avito.parser.converter.AvitoModelConverter;
-import ru.babin.autoproc.impl.avito.parser.converter.AvitoYearConverter;
 
 public class AutoruHttpLoader implements HttpLoader{
+	
+	//public static final String SEARCH_URL = "http://auto.ru/cars/used/?show_sales=1&sort[set_date]=desc";
+	public static final String SEARCH_URL = "http://auto.ru/cars/{ageType}/?show_sales=1&sort[set_date]=desc";
 	
 	public static final String PROVIDER_NAME = "AUTO.RU";
 	public static final String PROVIDER_SITE = "auto.ru";
@@ -35,15 +33,17 @@ public class AutoruHttpLoader implements HttpLoader{
 	AutoruBrandConverter brandConverter = new AutoruBrandConverter();
 	AutoruGearBoxTypeConverter gearBoxConverter = new AutoruGearBoxTypeConverter();
 	
-	AvitoModelConverter modelConverter = new AvitoModelConverter();
-	AvitoBodyTypeConverter bodyTypeConverter = new AvitoBodyTypeConverter();
-	AvitoGearBoxTypeConverter gearBoxTypeConverter = new AvitoGearBoxTypeConverter();
-	AvitoMileAgeConverter mileAgeConverter = new AvitoMileAgeConverter();
-	AvitoYearConverter yearConverter = new AvitoYearConverter();
-	
 	
 	HttpRequester httpRequester = new HttpRequester();
+			
+	public Response doRequest(AutoFilter filter) {
+		String fullUrl = SEARCH_URL.replace("{ageType}", ageTypeConverter.convert(filter.getAgeType())) + "&" + prepareParams(filter);
+		System.out.println("URL : " + fullUrl);
+		return httpRequester.request(fullUrl); 
+	}
 	
+	
+	/*
 	public Response doRequest(AutoFilter filter) {
 		String fullUrl = "http://" +  
 				
@@ -65,18 +65,19 @@ public class AutoruHttpLoader implements HttpLoader{
 		
 		return httpRequester.request(fullUrl); 
 	}
+	*/
 
 	private String prepareParams(AutoFilter filter) {
 		List <String> params = new LinkedList<>();				
 		
 		// country_group_id - 
-		params.add("search[country_group_id][5]=1");
+		//params.add("search[country_group_id][5]=1");
 		
 		// region (city)
 		//params.add("search[geo_region]=" + regConverter.convert(filter.getRegion()));
 		
 		// markfolder
-		params.add("search[mark-folder][]=0-");
+		//params.add("search[mark-folder][]=0-");
 		
 		// personality
 		params.add("search[seller]=" + personalityConverter.convert(filter.getPersonality()));  
@@ -121,10 +122,11 @@ public class AutoruHttpLoader implements HttpLoader{
 		if(filter.getMileageTo() != null){
 			params.add("search[run][max]=" + filter.getMileageTo().getMiles());
 		}
-			
-		// sort
-		params.add("sort[set_date]=desc");
 		
+		// page
+		if(filter.getPage() > 0){
+			params.add("p="+filter.getPage());
+		}
 		
 		String splitParamsString = splitParams(params, "&"); 
 		
