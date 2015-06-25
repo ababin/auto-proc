@@ -1,8 +1,5 @@
 package ru.babin.autoproc.impl.autoru.parser;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,6 +12,7 @@ import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.MarkAndModel;
 import ru.babin.autoproc.api.model.Ware;
+import ru.babin.autoproc.api.model.WareList;
 import ru.babin.autoproc.http.Response;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruAutoDescConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruDateConverter;
@@ -33,18 +31,24 @@ public class AutoruWareLoader implements WareLoader{
 	private AutoruAutoDescConverter autoDescConverter = new AutoruAutoDescConverter();
 	
 	@Override
-	public List<Ware> load(AutoFilter filter) {
+	public WareList load(AutoFilter filter) {
 		return parse(filter);
 	}
 
-	private List <Ware> parse(AutoFilter f){
+	private WareList parse(AutoFilter f){
 		Response resp = httpLoader.doRequest(f);
-		String content = prepareContentForParse(resp.result);
+		//String content = prepareContentForParse(resp.result);
+		String content = resp.result;
+		
 		
 		Document doc = Jsoup.parse(content);
-		Elements elements = doc.select("table.sales-list-table");
+		int totalAds = getTotalAds(doc);
 		
-		List <Ware> wares = new LinkedList<>();
+		
+		Elements elements = doc.select("table.sales-list-table");
+				
+		WareList wares = new WareList();
+		wares.setTotalCount(totalAds);
 		
 		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
@@ -59,6 +63,11 @@ public class AutoruWareLoader implements WareLoader{
 		return wares;
 	}
 	
+	private int getTotalAds(Document doc) {
+		Elements els = doc.select("li.tabs-v4-i_active > sup");
+		return Integer.valueOf(els.text());
+	}
+
 	private String prepareContentForParse(String result) {
 		String context = "<div class=\"widget widget_theme_white sales-list\">";
 		int i = result.indexOf(context);
@@ -155,6 +164,7 @@ public class AutoruWareLoader implements WareLoader{
 		ware.addParam(EParam.FUEL, String.valueOf(ad.getFuel()));
 		ware.addParam(EParam.GEAR_BOX_TYPE, String.valueOf(ad.getGearBoxType()));
 		ware.addParam(EParam.HORSES, String.valueOf(ad.getHorses()));
+		ware.addParam(EParam.POWER, String.valueOf(ad.getPower()));
 				
 	}
 	

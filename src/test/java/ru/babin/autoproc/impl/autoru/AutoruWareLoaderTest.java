@@ -3,7 +3,6 @@ package ru.babin.autoproc.impl.autoru;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -20,6 +19,7 @@ import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
+import ru.babin.autoproc.api.model.WareList;
 import ru.babin.autoproc.impl.autoru.parser.AutoruWareLoader;
 
 public class AutoruWareLoaderTest {
@@ -63,21 +63,22 @@ public class AutoruWareLoaderTest {
 		long dBegin = System.currentTimeMillis();
 		
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_2014, EYear.YEAR_2014);
+		f.setYear(EYear.YEAR_2012, EYear.YEAR_2012);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		//f.setNeedPhone(true);
 		
-		List <Ware> allWares = new LinkedList<>();
+		WareList allWares = new WareList();
 		
-		for(int page = 1; page < 141 ; page++){
+		for(int page = 1; page < 150 ; page++){
 			System.out.println("PAGE " + page + " : *********************************************************************************");
 			f.setPage(page);
 			
-			List <Ware> wares = wareLoader.load(f);
+			WareList wares = wareLoader.load(f);
 			if(wares.isEmpty()){
 				break;
 			}
 			allWares.addAll(wares);
+			allWares.setTotalCount(wares.getTotalCount());
 			
 		}
 			
@@ -109,7 +110,7 @@ public class AutoruWareLoaderTest {
 		}
 		long ms = dEnd - dBegin;
 		System.out.println("---------------------------------------------------------------");
-		System.out.println("Total wares: " + allWares.size() + " during " + ms);
+		System.out.println("Wares: " + allWares.size() + " during " + ms + "        TOTAL: " + allWares.getTotalCount());
 		long speed = ms / allWares.size();
 		System.out.println("Speed: " + speed + " ms/record");
 	}

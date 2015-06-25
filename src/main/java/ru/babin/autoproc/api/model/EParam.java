@@ -13,6 +13,7 @@ public enum EParam {
 	FUEL,
 	GEAR_BOX_TYPE,
 	HORSES,
+	POWER,
 	
 	/**
 	 * Номер объявления

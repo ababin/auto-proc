@@ -1,8 +1,5 @@
 package ru.babin.autoproc.impl.avito.parser;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +10,7 @@ import ru.babin.autoproc.api.loader.WareLoader;
 import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.ERegion;
 import ru.babin.autoproc.api.model.Ware;
+import ru.babin.autoproc.api.model.WareList;
 import ru.babin.autoproc.http.Response;
 
 public class AvitoWareLoader implements WareLoader{
@@ -20,17 +18,17 @@ public class AvitoWareLoader implements WareLoader{
 	private AvitoHttpLoader httpLoader = new AvitoHttpLoader();
 	
 	@Override
-	public List<Ware> load(AutoFilter filter) {
+	public WareList load(AutoFilter filter) {
 		return parse(filter);
 	}
 
-	private List <Ware> parse(AutoFilter f){
+	private WareList parse(AutoFilter f){
 		Response resp = httpLoader.doRequest(f);
 		
 		Document doc = Jsoup.parse(resp.result);
 		Elements elements = doc.select("div.item");
 		
-		List <Ware> wares = new LinkedList<>();
+		WareList wares = new WareList();
 		
 		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
