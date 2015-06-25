@@ -63,7 +63,7 @@ public class AutoruWareLoaderTest {
 		long dBegin = System.currentTimeMillis();
 		
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_2015, EYear.YEAR_2015);
+		f.setYear(EYear.YEAR_2014, EYear.YEAR_2014);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		//f.setNeedPhone(true);
 		

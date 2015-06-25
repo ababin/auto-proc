@@ -139,12 +139,14 @@ public class AutoruWareLoader implements WareLoader{
 	}
 	
 	private void parseDescShort(Ware ware , Element element){
-		String bodyTypeAndColor = getBodyTypeAndColor(element);
-		String commonDesc = findValue(element, "td","sales-list-cell sales-list-cell_mark_id");
-		String res = bodyTypeAndColor + " " + commonDesc;
-		ware.addParam(EParam.DESC_SHORT, res);
+		String colorAndBodyType = getBodyTypeAndColor(element);
+		//String markAndModel = getMarkAndModel(element);
+		String misc = getCommonDesc(element);
 		
-		AutoDesc ad = autoDescConverter.convert(ware);
+		String fullDesc = colorAndBodyType + " " + misc;
+		ware.addParam(EParam.DESC_SHORT, fullDesc);
+		
+		AutoDesc ad = autoDescConverter.convert(colorAndBodyType,  misc);
 				
 		ware.addParam(EParam.BODY_TYPE, ad.getBodyType());
 		ware.addParam(EParam.COLOR, ad.getColor());
@@ -155,6 +157,17 @@ public class AutoruWareLoader implements WareLoader{
 		ware.addParam(EParam.HORSES, String.valueOf(ad.getHorses()));
 				
 	}
+	
+	private String getCommonDesc(Element element){
+		return findValue(element, "td", "sales-list-cell sales-list-cell_mark_id");
+	}
+	
+	/*
+	private String getMarkAndModel(Element element){
+		Element el = findElement(element, "td", "sales-list-cell sales-list-cell_mark_id");
+		return el.child(0).text();
+	}
+	*/
 	
 	private String getName(Element element){
 		return findFullValue(element, "a","sales-list-link");

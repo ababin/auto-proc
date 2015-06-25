@@ -10,7 +10,15 @@ public class AutoDesc {
 	
 	private String gearBoxType;
 	
+	/**
+	 * л.с.
+	 */
 	private int horses;
+	
+	/**
+	 * кВт
+	 */
+	private int power;
 	
 	private String fuel;
 	
@@ -73,6 +81,14 @@ public class AutoDesc {
 
 	public void setDrivingGear(String drivingGear) {
 		this.drivingGear = drivingGear;
+	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
 	}
 	
 	
