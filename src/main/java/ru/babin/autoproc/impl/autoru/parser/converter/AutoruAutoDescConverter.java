@@ -100,11 +100,19 @@ public class AutoruAutoDescConverter {
 						
 		String [] ar = misc.split(" ");
 		
-		String gearDrive = ar[ar.length-1];
-		ar = Arrays.copyOfRange(ar, 0, ar.length-1);
-				
+		boolean isGearDriveExists = ar[ar.length-2].endsWith(",");
+		
+		String gearDrive = null;
+		if(isGearDriveExists){
+			gearDrive = ar[ar.length-1];
+			ar = Arrays.copyOfRange(ar, 0, ar.length-1); 
+		}
+		 
+		// fuel
 		String fuel = ar[ar.length-1];
-		fuel = fuel.substring(0, fuel.length()-1);
+		if(fuel.endsWith(",")){
+			fuel = fuel.substring(0, fuel.length()-1);
+		}
 		ar = Arrays.copyOfRange(ar, 0, ar.length-1);
 		
 		// find horses

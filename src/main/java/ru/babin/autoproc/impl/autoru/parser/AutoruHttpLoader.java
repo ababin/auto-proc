@@ -92,10 +92,14 @@ public class AutoruHttpLoader implements HttpLoader{
 		}
 		
 		// yearFrom
-		params.add("search[year][min]=" + filter.getYearFrom().getYear());
+		if(filter.getYearFrom() != null){
+			params.add("search[year][min]=" + filter.getYearFrom().getYear());
+		}
 		
 		// yearTo
-		params.add("search[year][max]=" + filter.getYearTo().getYear());
+		if(filter.getYearTo() != null){
+			params.add("search[year][max]=" + filter.getYearTo().getYear());
+		}
 		
 		// body
 		for(EAutoBodyType body : filter.getAutoBodyTypes()){

@@ -17,6 +17,7 @@ import ru.babin.autoproc.http.Response;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruAutoDescConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruDateConverter;
 import ru.babin.autoproc.impl.autoru.parser.converter.AutoruMarkAndModelConverter;
+import ru.babin.autoproc.util.NumberUtil;
 
 public class AutoruWareLoader implements WareLoader{
 
@@ -37,35 +38,58 @@ public class AutoruWareLoader implements WareLoader{
 
 	private WareList parse(AutoFilter f){
 		Response resp = httpLoader.doRequest(f);
-		//String content = prepareContentForParse(resp.result);
-		String content = resp.result;
-		
-		
-		Document doc = Jsoup.parse(content);
+		Document doc = Jsoup.parse(resp.result);
 		int totalAds = getTotalAds(doc);
-		
-		
-		Elements elements = doc.select("table.sales-list-table");
-				
+												
 		WareList wares = new WareList();
 		wares.setTotalCount(totalAds);
+		wares.setDoc(doc);
+		wares.setFilter(f);
 		
+		if(f.withoutPriceTo()){
+			if(totalAds <= f.getLoad_maxCount()){
+				// OK
+			}else{
+				wares.setLoadingSkippedByBigCount(true);
+				return wares;
+			}
+		}else{
+			if(totalAds < f.getLoad_minCount()){
+				wares.setLoadingSkippedBySmallCount(true);
+				return wares;
+			}
+			if(totalAds > f.getLoad_maxCount()){
+				wares.setLoadingSkippedByBigCount(true);
+				return wares;
+			}
+		}
+		
+		return forceParse(wares);
+		
+	}
+	
+	public WareList forceParse(WareList wares){
+		Elements elements = wares.getDoc().select("table.sales-list-table");
+		AutoFilter f = wares.getFilter();
 		for(int  i =0 ; i < elements.size(); i++){
 			Element element = elements.get(i);
-			//System.out.println(element.html());
 			Ware ware = parseWare(element, f.getRegion());
 			if(f.isNeedPhone()){
 				phoneLoader.load(ware);
 			}
 			wares.add(ware);
 		}
-		
 		return wares;
 	}
 	
 	private int getTotalAds(Document doc) {
 		Elements els = doc.select("li.tabs-v4-i_active > sup");
-		return Integer.valueOf(els.text());
+		try{
+			return Integer.valueOf(els.text());
+		}catch(Exception e){
+			return 0;
+		}
+		
 	}
 
 	private String prepareContentForParse(String result) {
@@ -114,7 +138,9 @@ public class AutoruWareLoader implements WareLoader{
 	}
 	
 	private void parseMileAge(Ware ware , Element element){
-		ware.addParam(EParam.MILE_AGE_STR, findValue(element, "td" , "sales-list-cell sales-list-cell_run"));
+		String s = findValue(element, "td" , "sales-list-cell sales-list-cell_run");
+		ware.addParam(EParam.MILE_AGE_STR, s);
+		ware.addParam(EParam.MILE_AGE, String.valueOf(NumberUtil.getAsInt(s)));
 	}
 	
 	private void parseYear(Ware ware , Element element){
@@ -193,7 +219,10 @@ public class AutoruWareLoader implements WareLoader{
 	}
 	
 	private void parsePrice(Ware ware , Element element){
-		ware.addParam(EParam.PRICE_STR, findFullValue(element, "div", "sales-list-price"));
+		String priceStr = findFullValue(element, "div", "sales-list-price");
+		ware.addParam(EParam.PRICE_STR, priceStr);
+		ware.addParam(EParam.PRICE, String.valueOf(NumberUtil.getAsInt(priceStr)));
+		
 	}
 	
 	private String findValue(Element element, String tagName, String cssClass, String attrName){

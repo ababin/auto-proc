@@ -37,9 +37,9 @@ public class AutoFilter {
 	
 	private int priceTo;
 	
-	private EMileAge mileageFrom = EMileAge.MA_0;
+	private EMileAge mileageFrom;
 	
-	private EMileAge mileageTo = EMileAge.MA_500;
+	private EMileAge mileageTo;
 	
 	private EYear yearFrom = EYear.YEAR_1960;
 	
@@ -50,6 +50,9 @@ public class AutoFilter {
 	private int page = 1;
 	
 	private boolean needPhone = false;
+	
+	private int load_maxCount = Integer.MAX_VALUE;
+	private int load_minCount = 0;
 	
 	public ERegion getRegion() {
 		return region;
@@ -193,6 +196,10 @@ public class AutoFilter {
 	public void setPage(int page) {
 		this.page = page;
 	}
+	
+	public void incPage(){
+		page++;
+	}
 
 	public boolean isNeedPhone() {
 		return needPhone;
@@ -202,4 +209,24 @@ public class AutoFilter {
 		this.needPhone = needPhone;
 	}
 	
+	public int getLoad_maxCount() {
+		return load_maxCount;
+	}
+
+	public void setLoad_maxCount(int load_maxCount) {
+		this.load_maxCount = load_maxCount;
+	}
+
+	public int getLoad_minCount() {
+		return load_minCount;
+	}
+
+	public void setLoad_minCount(int load_minCount) {
+		this.load_minCount = load_minCount;
+	}
+	
+	public boolean withoutPriceTo(){
+		return priceTo == 0;
+	}
+		 
 }

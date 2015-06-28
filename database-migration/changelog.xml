@@ -1,0 +1,99 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    
+    <changeSet id="2015-06-26-create-table-auto" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_auto_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-body_type_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_body_type_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-city_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_city_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-color_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_color_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-driving_gear_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_driving_gear_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-fuel_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_fuel_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-gear_box_type_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_gear_box_type_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-mark_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_mark_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-model_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_model_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-26-create-table-provider_ref" author="a.babin" context="common" >
+        <sqlFile path="scripts/create_provider_ref_2015_06_26.sql" dbms="postgresql" encoding="UTF-8" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-mark_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_name_unique" tableName="mark_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-model_ref-name-mark_id" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name,mark_id" constraintName="const_name_and_mark_id_unique" tableName="model_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-body_type_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_body_type_ref_name_unique" tableName="body_type_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-city_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_city_ref_name_unique" tableName="city_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-color_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_color_ref_name_unique" tableName="color_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-drop-not-null-ctrt-for-color_ref-code" author="a.babin" context="common" >
+			<dropNotNullConstraint columnName="code" tableName="color_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-driving_gear_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_driving_gear_ref_name_unique" tableName="driving_gear_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-fuel_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_fuel_ref_name_unique" tableName="fuel_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-gear_box_type_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_gear_box_type_ref_name_unique" tableName="gear_box_type_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-unique-ctrt-for-provider_ref-name" author="a.babin" context="common" >
+        <addUniqueConstraint columnNames="name" constraintName="const_provider_ref_name_unique" tableName="provider_ref"/>
+    </changeSet>
+	
+	<changeSet id="2015-06-27-add-field-create_date-for-auto" author="a.babin" context="common" >
+        <sql endDelimiter=";">
+            ALTER TABLE auto ADD COLUMN create_date TIMESTAMP(6) WITHOUT TIME ZONE DEFAULT now();
+        </sql>
+    </changeSet>
+	
+	
+	
+	
+	
+
+</databaseChangeLog>
+

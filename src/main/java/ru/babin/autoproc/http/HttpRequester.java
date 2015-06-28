@@ -35,8 +35,8 @@ public class HttpRequester {
 		HttpClient client = new HttpClient();
 		
 		// REQUEST
-		System.out.println("-----------------------------------------------------------------------------------------------------");
-		System.out.println("REQUEST:  " + url);
+		//System.out.println("-----------------------------------------------------------------------------------------------------");
+		//System.out.println("REQUEST:  " + url);
 		
 		try {
 			url = encodeUrl(url);
@@ -58,7 +58,7 @@ public class HttpRequester {
 
 	private void setCookies(HttpClient client) {
 		for(Cookie c : cookieHolder.getCookiesArray()){
-			System.out.println("Cookie: " + c.getName() + "=" + c.getValue());
+			//System.out.println("Cookie: " + c.getName() + "=" + c.getValue());
 		}
 		client.getState().addCookies(cookieHolder.getCookiesArray());
 	}
@@ -123,7 +123,7 @@ public class HttpRequester {
 	}
 	
 	private void printCookie(Cookie c){
-		System.out.println("SET COOKIE: " + c.getName() + "=" + c.getValue() + "            " + "[domain=" + c.getDomain() + "; path=" + c.getPath() + "]");
+		//System.out.println("SET COOKIE: " + c.getName() + "=" + c.getValue() + "            " + "[domain=" + c.getDomain() + "; path=" + c.getPath() + "]");
 	}
 	
 	public String encodeUrl(String str){

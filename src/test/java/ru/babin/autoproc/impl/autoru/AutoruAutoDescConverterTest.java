@@ -1,6 +1,7 @@
 package ru.babin.autoproc.impl.autoru;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -62,5 +63,27 @@ public class AutoruAutoDescConverterTest {
 		assertEquals(ad.getHorses(), 0);
 		assertEquals(ad.getPower(), 516);
 	}
+	
+	@Test
+	public void test4(){
+		
+		String colorAndBodyType = "Черный внедорожник 5 дв.";
+		String misc = "1.5 MT (75 л.с.) бензин";
+		
+		AutoDesc ad = converter.convert(colorAndBodyType, misc);
+		
+		assertEquals(ad.getColor(), "черный");
+		assertEquals(ad.getBodyType(), "внедорожник 5 дв.");
+		assertNull(ad.getDrivingGear());
+		assertEquals(ad.getEngineVolume(), 15);
+		assertEquals(ad.getFuel(), "бензин");
+		assertEquals(ad.getGearBoxType(), "MT");
+		assertEquals(ad.getHorses(), 75);
+		assertEquals(ad.getPower(), 0);
+	}
+	
+	
+	
+	
 	
 }

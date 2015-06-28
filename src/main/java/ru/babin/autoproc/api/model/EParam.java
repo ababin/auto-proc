@@ -45,6 +45,8 @@ public enum EParam {
 	 */
 	PRICE_STR,
 	
+	PRICE,
+	
 	/**
 	 * Дата (строка)
 	 */
@@ -61,6 +63,7 @@ public enum EParam {
 	 * Пробег
 	 */
 	MILE_AGE_STR,
+	MILE_AGE,
 	
 	/**
 	 * Год
