@@ -1,25 +1,21 @@
 package ru.babin.autoproc.api.model;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Ware {
 	
-	private List <Param> params = new LinkedList <>();
+	private Map <EParam, Param> params = new HashMap <>();
 	
 	public String getParam(EParam paramIn){
-		for(Param param : params){
-			if(param.param == paramIn){
-				return param.value;
-			}
-		}
-		return null;
+		Param param = params.get(paramIn);
+		return param == null ? null : param.value;
 	}
 
 	public void addParam(EParam eparam , String value){
 		Param p = new Param(eparam, value);
-		params.add(p);
+		params.put(eparam,p);
 	}
 	
 	public String getName(){
@@ -136,7 +132,7 @@ public class Ware {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getClass().getSimpleName() + "{");
 		boolean first = true;
-		for(Param p : params){
+		for(Param p : params.values()){
 			if(first){
 				sb.append(p);
 				first = false;

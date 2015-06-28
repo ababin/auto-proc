@@ -118,10 +118,18 @@ public class AutoruWareLoader implements WareLoader{
 		parseMileAge(ware, element);
 		parseYear(ware, element);
 		
+		restoreAdsNumberIfNeed(ware);
 		
 		return ware;
 	}
 	
+	private void restoreAdsNumberIfNeed(Ware ware) {
+		if(ware.getAdsNumber() == null && ware.getAdsUrl() != null){
+			String [] ar = ware.getAdsUrl().split("/");
+			ware.addParam(EParam.ADS_NUMBER, ar[ar.length-1]);
+		}		
+	}
+
 	private void setProviderParams(Ware ware){
 		ware.addParam(EParam.PROVIDER_NAME, httpLoader.PROVIDER_NAME);
 		ware.addParam(EParam.PROVIDER_SITE, httpLoader.PROVIDER_SITE);

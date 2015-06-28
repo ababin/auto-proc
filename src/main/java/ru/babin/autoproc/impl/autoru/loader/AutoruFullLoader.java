@@ -38,7 +38,7 @@ public class AutoruFullLoader {
 	private final int PRICE_STEP = 50000;
 	
 	public void process(){
-		for(int year = 1990; year < 1993; year++){
+		for(int year = 1990; year < 1995; year++){
 			processByYear(year);
 		}
 	}
