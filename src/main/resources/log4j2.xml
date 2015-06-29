@@ -55,6 +55,11 @@
             <AppenderRef ref="console"/>
         </Logger>
         
+        <Logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" additivity="false" level="FATAL">
+            <AppenderRef ref="console"/>
+        </Logger>
+        
+        
         
         
         

@@ -25,14 +25,16 @@ public class AutoruFullLoader {
 			
 	private final int MAX_ADS_FOR_LOADING = 4500;
 	private final int MIN_ADS_FOR_LOADING = 3000;
-	private final int MAX_DOUBLE_COUNT = 5;
+	private final int MAX_DOUBLE_COUNT = 10;
 	private final int PRICE_STEP = 50000;
 	
 	private AutoruWareLoader wareLoader = new AutoruWareLoader();
 	
 	public void process(){
-		for(int year = 1990; year < 1995; year++){
-			processByYear(year);
+		for(int year = 1990; year < 2016; year++){
+			int count  = processByYear(year);
+			log.debug("LOADED year " + year + ". Loaded entities: " + count);
+			log.debug("=====================================================================================================");
 		}
 	}
 	
@@ -101,8 +103,9 @@ public class AutoruFullLoader {
 			}
 			return process(context);
 		}
-		
-		return loadAllPages(wares);
+		LoadedResult res = loadAllPages(wares);
+		context.currentFilter.status = ProcessStatus.ANALIZE;
+		return res;
 	}
 	
 	private LoadedResult loadAllPages(WareList wareList){
@@ -112,7 +115,7 @@ public class AutoruFullLoader {
 			wareList = wareLoader.forceParse(wareList);
 		}
 		
-		int loadedCounter = 0;
+		int savedCounter = 0;
 		
 		
 		while(!wareList.isEmpty()){
@@ -121,17 +124,15 @@ public class AutoruFullLoader {
 			int doublicateCounter = 0;
 			for(Ware ware : wareList){
 				DbOpStatus status = autoDaoService.create(ware);
-				loadedCounter ++;
 				if(status == DbOpStatus.DOUBLICATE){
 					doublicateCounter++;
+					if(doublicateCounter >= MAX_DOUBLE_COUNT){
+						log.debug("Found " + MAX_DOUBLE_COUNT + " doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
+						return new LoadedResult(savedCounter, true); 
+					}
+				}else{
+					savedCounter ++;
 				}
-				if(doublicateCounter >= MAX_DOUBLE_COUNT){
-					break;
-				}
-			}
-			if(doublicateCounter >= MAX_DOUBLE_COUNT){
-				log.debug("Found " + MAX_DOUBLE_COUNT + " doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
-				return new LoadedResult(loadedCounter, true); 
 			}
 			
 			AutoFilter filter = wareList.getFilter();
@@ -140,7 +141,7 @@ public class AutoruFullLoader {
 			wareList = wareLoader.load(filter);
 						
 		}
-		return new LoadedResult(loadedCounter, false);
+		return new LoadedResult(savedCounter, false);
 	}
 	
 	
@@ -244,6 +245,7 @@ public class AutoruFullLoader {
 			if(!history.isEmpty()){
 				currentFilter = history.get(history.size()-1);
 				history.remove(history.size()-1);
+				currentFilter.status = ProcessStatus.FORCE_LOAD;
 			}else{
 				if(currentFilter.priceTo == 0){
 					next();

@@ -120,6 +120,7 @@ public class AutoDaoServiceImpl {
 				return getSelf().checkAndUpdateIfNeed(auto);
 			}else{
 				log.error("Error during persist!", e);
+				log.error("AUTO: " + auto);
 				System.exit(10);
 			}
 		}
@@ -154,6 +155,7 @@ public class AutoDaoServiceImpl {
 			return DbOpStatus.DOUBLICATE;
 		}
 		// remove and insert
+		log.warn("Found already existence record (Auto), but there are a few changes." + "Current auto: " + auto + " ; DB Auto: " + loadedAuto);
 		emanager.remove(loadedAuto);
 		emanager.flush();
 		emanager.persist(auto);

@@ -366,6 +366,40 @@ public class Auto {
 		
 	}
 	
+	public String toString(){
+		return this.getClass().getSimpleName() + ":{" + 
+				"id=" + id + "; " + 
+				"mark=" + mark + "; " + 
+				"markId=" + markId + "; " + 
+				"model=" + model + "; " + 
+				"modelId=" + modelId + "; " + 
+				"bodyType=" + bodyType + "; " + 
+				"bodyTypeId=" + bodyTypeId + "; " + 
+				"color=" + color + "; " + 
+				"colorId=" + colorId + "; " + 
+				"drivingGear=" + drivingGear + "; " + 
+				"drivingGeearId=" + drivingGearId + "; " + 
+				"engineVolume=" + engineVolume + "; " + 
+				"fuel=" + fuel + "; " + 
+				"fuelId=" + fuelId + "; " + 
+				"gearBoxType=" + gearBoxType + "; " + 
+				"gearBoxTypeId=" + gearBoxTypeId + "; " + 
+				"horses=" + horses + "; " + 
+				"power=" + power + "; " + 
+				"adsNumber=" + adsNumber + "; " + 
+				"adsUrl=" + adsUrl + "; " + 
+				"imageUrl=" + imageUrl + "; " + 
+				"price=" + price + "; " + 
+				"dateTime=" + date + "; " + 
+				"city=" + city + "; " + 
+				"cityId=" + cityId + "; " +
+				"mileAge=" + mileAge + "; " + 
+				"year=" + year + "; " + 
+				"provider=" + provider + "; " + 
+				"providerId=" + providerId + "; " +
+				"}";
+	}
+	
 	
 
 }

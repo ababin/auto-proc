@@ -148,7 +148,11 @@ public class AutoruWareLoader implements WareLoader{
 	private void parseAdsUrl(Ware ware , Element element){
 		Element a = findElement(element, "a" , "sales-list-link");
 		if(a != null){
-			ware.addParam(EParam.ADS_URL, a.attr("href"));
+			String val = a.attr("href");
+			if(val.endsWith("?from=sales_fresh")){
+				val = val.substring(0, val.length() - 17);
+			}
+			ware.addParam(EParam.ADS_URL, val);
 		}
 	}
 	
