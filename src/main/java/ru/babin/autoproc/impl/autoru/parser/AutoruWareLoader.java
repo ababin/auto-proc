@@ -91,17 +91,7 @@ public class AutoruWareLoader implements WareLoader{
 		}
 		
 	}
-
-	private String prepareContentForParse(String result) {
-		String context = "<div class=\"widget widget_theme_white sales-list\">";
-		int i = result.indexOf(context);
-		if(i >= 0){
-			return result.substring(i + context.length());
-		}else{
-			return result;
-		}
-	}
-
+	
 	private Ware parseWare(Element element, ERegion region){
 		Ware ware = new Ware();
 		
@@ -205,14 +195,7 @@ public class AutoruWareLoader implements WareLoader{
 	private String getCommonDesc(Element element){
 		return findValue(element, "td", "sales-list-cell sales-list-cell_mark_id");
 	}
-	
-	/*
-	private String getMarkAndModel(Element element){
-		Element el = findElement(element, "td", "sales-list-cell sales-list-cell_mark_id");
-		return el.child(0).text();
-	}
-	*/
-	
+			
 	private String getName(Element element){
 		return findFullValue(element, "a","sales-list-link");
 	}

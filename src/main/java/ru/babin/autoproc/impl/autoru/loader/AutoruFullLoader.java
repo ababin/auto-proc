@@ -19,23 +19,16 @@ import ru.babin.autoproc.impl.autoru.parser.AutoruWareLoader;
 
 public class AutoruFullLoader {
 	
-	
-	
-	@Autowired AutoDaoServiceImpl autoDaoService;
-	
 	private static final Logger log = LoggerFactory.getLogger("autoru.loader");
-	
-	private final int MAX_PAGES = 140;
-	
-	private final int PAGES_LIMIT = 2;
-	
-	private final int MAX_ADS = 4500;
-	
+		
+	@Autowired AutoDaoServiceImpl autoDaoService;
+			
+	private final int MAX_ADS_FOR_LOADING = 4500;
+	private final int MIN_ADS_FOR_LOADING = 3000;
 	private final int MAX_DOUBLE_COUNT = 5;
+	private final int PRICE_STEP = 50000;
 	
 	private AutoruWareLoader wareLoader = new AutoruWareLoader();
-	
-	private final int PRICE_STEP = 50000;
 	
 	public void process(){
 		for(int year = 1990; year < 1995; year++){
@@ -47,31 +40,51 @@ public class AutoruFullLoader {
 		log.debug("Loading begin  for year " + year + " ...");
 		
 		Context context = new Context(year);
+		int totalCounter = 0;
+								
+		while(true){
+			LoadedResult res = process(context);
+			totalCounter += res.loadedCount;
+			
+			//     либо дубликаты          либо удалось всё загрузить без привлечения цены
+			if(res.dublicatesWasFound || context.currentFilter.priceTo == 0){
+				break;
+			}
+			
+			context.prepareNextPriceSkope();
+		}
+		return totalCounter;
+	}
+	
+	
+	/*
+	public int processByYear(int year){
+		log.debug("Loading begin  for year " + year + " ...");
+		
+		Context context = new Context(year);
 		
 		LoadedResult res = process(context);
-		if(res.dublicates){
-			return res.total;
-		}
+		int totalCounter = res.loadedCount;
 		
-		int totalCounter = res.total; 
-				
+		if(res.dublicatesWasFound){
+			return totalCounter;
+		}
+						
 		while(true){
 			if(context.currentFilter.priceTo > 0){
 				context.prepareNextPriceSkope();
 				res = process(context);
-				totalCounter += res.total;
-				if(res.dublicates){
+				totalCounter += res.loadedCount;
+				if(res.dublicatesWasFound){
 					break;
 				}
 			}else{
 				break;
 			}
 		}
-		
 		return totalCounter;
-		
 	}
-	
+	*/
 	
 	
 	
@@ -112,12 +125,12 @@ public class AutoruFullLoader {
 				if(status == DbOpStatus.DOUBLICATE){
 					doublicateCounter++;
 				}
-				if(doublicateCounter >= 10){
+				if(doublicateCounter >= MAX_DOUBLE_COUNT){
 					break;
 				}
 			}
-			if(doublicateCounter >= 10){
-				log.debug("Found 10 doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
+			if(doublicateCounter >= MAX_DOUBLE_COUNT){
+				log.debug("Found " + MAX_DOUBLE_COUNT + " doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
 				return new LoadedResult(loadedCounter, true); 
 			}
 			
@@ -142,8 +155,8 @@ public class AutoruFullLoader {
 			f.setLoad_minCount(0);
 			f.setLoad_maxCount(Integer.MAX_VALUE);
 		}else{
-			f.setLoad_minCount(3000);
-			f.setLoad_maxCount(4500);
+			f.setLoad_minCount(MIN_ADS_FOR_LOADING);
+			f.setLoad_maxCount(MAX_ADS_FOR_LOADING);
 		}
 				
 		if(partFilter.year == 1990){
@@ -151,14 +164,7 @@ public class AutoruFullLoader {
 		}else{
 			f.setYear(EYear.fromYear(partFilter.year), EYear.fromYear(partFilter.year));
 		}
-		
-		if(partFilter.priceFrom > 0){
-			f.setPriceFrom(partFilter.priceFrom);
-		}
-		
-		if(partFilter.priceTo > 0){
-			f.setPriceTo(partFilter.priceTo);
-		}
+		f.setPrice(partFilter.priceFrom, partFilter.priceTo);
 		
 		return f;
 	}
@@ -177,6 +183,10 @@ public class AutoruFullLoader {
 		int page = 1;
 		ProcessStatus status;
 		
+		public PartFilter(int year){
+			this.year = year;
+		}
+		
 		public String toString(){
 			return this.getClass().getSimpleName() + ":{" + 
 					"page=" + page + "; " +
@@ -186,8 +196,7 @@ public class AutoruFullLoader {
 		}
 		
 		public PartFilter copy(){
-			PartFilter f = new PartFilter();
-			f.year = year;
+			PartFilter f = new PartFilter(year);
 			f.priceFrom = priceFrom;
 			f.priceTo = priceTo;
 			f.page = page;
@@ -199,29 +208,24 @@ public class AutoruFullLoader {
 	
 	private enum ProcessStatus{
 		ANALIZE,
-		PROCESS,
-		PROCESSED,
-		FORCE_LOAD,
-		ERROR,
-		;
+		FORCE_LOAD;
 	}
 	
 	private class LoadedResult{
-		int total;
-		boolean dublicates = false;
+		int loadedCount;
+		boolean dublicatesWasFound = false;
 		public LoadedResult(int total, boolean dublicates){
-			this.total = total;
-			this.dublicates = dublicates;
+			this.loadedCount = total;
+			this.dublicatesWasFound = dublicates;
 		}
 	}
 	
 	private class Context{
 		PartFilter currentFilter;
-		private List <PartFilter> history = new ArrayList<>();
+		List <PartFilter> history = new ArrayList<>();
 		
 		public Context(int year){
-			currentFilter = new PartFilter();
-			currentFilter.year = year;
+			currentFilter = new PartFilter(year);
 		}
 		
 		public void next(){
@@ -232,7 +236,7 @@ public class AutoruFullLoader {
 				currentFilter.priceTo = currentFilter.priceFrom;
 				currentFilter.priceTo--;
 			}
-			currentFilter.priceTo += 50000;
+			currentFilter.priceTo += PRICE_STEP;
 			currentFilter.status = ProcessStatus.ANALIZE;
 		}
 						
@@ -241,13 +245,11 @@ public class AutoruFullLoader {
 				currentFilter = history.get(history.size()-1);
 				history.remove(history.size()-1);
 			}else{
-				if(currentFilter.priceFrom == 0 && currentFilter.priceTo == 0){
+				if(currentFilter.priceTo == 0){
 					next();
-					return;
 				}else{
 					currentFilter.status = ProcessStatus.FORCE_LOAD;
 				}
-				
 			}
 		}
 		

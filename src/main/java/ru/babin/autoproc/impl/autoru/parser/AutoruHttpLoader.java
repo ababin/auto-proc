@@ -22,8 +22,8 @@ public class AutoruHttpLoader implements HttpLoader{
 	//public static final String SEARCH_URL = "http://auto.ru/cars/used/?show_sales=1&sort[set_date]=desc";
 	public static final String SEARCH_URL = "http://auto.ru/cars/{ageType}/?show_sales=1&sort[set_date]=desc";
 	
-	public static final String PROVIDER_NAME = "AUTO.RU";
-	public static final String PROVIDER_SITE = "auto.ru";
+	public final String PROVIDER_NAME = "AUTO.RU";
+	public final String PROVIDER_SITE = "auto.ru";
 		
 	AutoruRegionConverter regConverter = new AutoruRegionConverter();
 	AutoruCategoryConverter catConverter = new AutoruCategoryConverter();
