@@ -19,9 +19,10 @@ import ru.babin.autoproc.impl.autoru.parser.AutoruWareLoader;
 
 public class AutoruFullLoader {
 	
-	private static final Logger log = LoggerFactory.getLogger("autoru.loader");
-		
-	@Autowired AutoDaoServiceImpl autoDaoService;
+	private final Logger log = LoggerFactory.getLogger("autoru.loader");
+	
+	@Autowired 
+	private AutoDaoServiceImpl autoDaoService;
 			
 	private final int MAX_ADS_FOR_LOADING = 4500;
 	private final int MIN_ADS_FOR_LOADING = 3000;
@@ -38,58 +39,25 @@ public class AutoruFullLoader {
 		}
 	}
 	
-	public int processByYear(int year){
+	private int processByYear(int year){
 		log.debug("Loading begin  for year " + year + " ...");
 		
 		Context context = new Context(year);
-		int totalCounter = 0;
+		int totalCreated = 0;
 								
 		while(true){
 			LoadedResult res = process(context);
-			totalCounter += res.loadedCount;
+			totalCreated += res.loadedCount;
 			
 			//     либо дубликаты          либо удалось всё загрузить без привлечения цены
-			if(res.dublicatesWasFound || context.currentFilter.priceTo == 0){
+			if(res.dublicatesWasFound || context.currentFilter.isWithoutUpperPrice()){
 				break;
 			}
 			
 			context.prepareNextPriceSkope();
 		}
-		return totalCounter;
+		return totalCreated;
 	}
-	
-	
-	/*
-	public int processByYear(int year){
-		log.debug("Loading begin  for year " + year + " ...");
-		
-		Context context = new Context(year);
-		
-		LoadedResult res = process(context);
-		int totalCounter = res.loadedCount;
-		
-		if(res.dublicatesWasFound){
-			return totalCounter;
-		}
-						
-		while(true){
-			if(context.currentFilter.priceTo > 0){
-				context.prepareNextPriceSkope();
-				res = process(context);
-				totalCounter += res.loadedCount;
-				if(res.dublicatesWasFound){
-					break;
-				}
-			}else{
-				break;
-			}
-		}
-		return totalCounter;
-	}
-	*/
-	
-	
-	
 		
 	private LoadedResult process(Context context){
 		AutoFilter autoFilter = initFilter(context.currentFilter);
@@ -117,29 +85,37 @@ public class AutoruFullLoader {
 		
 		int savedCounter = 0;
 		
-		
 		while(!wareList.isEmpty()){
-			log.info("  page " + wareList.getFilter().getPage() + " (total items: " + wareList.getTotalCount() + ")");		
-			// save all
-			int doublicateCounter = 0;
-			for(Ware ware : wareList){
-				DbOpStatus status = autoDaoService.create(ware);
-				if(status == DbOpStatus.DOUBLICATE){
-					doublicateCounter++;
-					if(doublicateCounter >= MAX_DOUBLE_COUNT){
-						log.debug("Found " + MAX_DOUBLE_COUNT + " doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
-						return new LoadedResult(savedCounter, true); 
-					}
-				}else{
-					savedCounter ++;
-				}
+			LoadedResult res = loadAlonePage(wareList);
+			savedCounter += res.loadedCount;
+			
+			if(res.dublicatesWasFound){
+				return new LoadedResult(savedCounter, true);
 			}
 			
-			AutoFilter filter = wareList.getFilter();
-			filter.incPage();
-			
-			wareList = wareLoader.load(filter);
-						
+			wareList.getFilter().incPage();
+			wareList = wareLoader.load(wareList.getFilter());
+		}
+		return new LoadedResult(savedCounter, false);
+	}
+	
+	
+	private LoadedResult loadAlonePage(WareList wareList){
+		log.info("  page " + wareList.getFilter().getPage() + " (total items: " + wareList.getTotalCount() + ")");		
+		// save all
+		int doublicateCounter = 0;
+		int savedCounter = 0;
+		for(Ware ware : wareList){
+			DbOpStatus status = autoDaoService.create(ware);
+			if(status == DbOpStatus.DOUBLICATE){
+				doublicateCounter++;
+				if(doublicateCounter >= MAX_DOUBLE_COUNT){
+					log.debug("Found " + MAX_DOUBLE_COUNT + " doublicates at least ! Stop process for current filter:  " + wareList.getFilter());
+					return new LoadedResult(savedCounter, true); 
+				}
+			}else{
+				savedCounter ++;
+			}
 		}
 		return new LoadedResult(savedCounter, false);
 	}
@@ -202,6 +178,9 @@ public class AutoruFullLoader {
 			f.priceTo = priceTo;
 			f.page = page;
 			return f;
+		}
+		public boolean isWithoutUpperPrice(){
+			return priceTo == 0;
 		}
 			
 				
