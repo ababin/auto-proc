@@ -75,9 +75,11 @@ public class AutoDaoServiceImpl {
 		auto.setCity(cityRef.getName());
 		auto.setCityId(cityRef.getId());
 		
-		auto.setColor(colorRef.getName());
-		auto.setColorId(colorRef.getId());
-		
+		if(colorRef != null){
+			auto.setColor(colorRef.getName());
+			auto.setColorId(colorRef.getId());
+		}
+				
 		auto.setDate(ware.getDate());
 		
 		if(drivingGearRef != null){
@@ -112,6 +114,9 @@ public class AutoDaoServiceImpl {
 		auto.setProviderId(providerRef.getId());
 		
 		auto.setYear(ware.getYear());
+		
+		auto.setWheel(ware.getWheel());
+		auto.setState(ware.getState());
 		
 		try{
 			return getSelf().persist(auto);

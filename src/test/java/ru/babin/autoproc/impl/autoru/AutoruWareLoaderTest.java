@@ -115,6 +115,50 @@ public class AutoruWareLoaderTest {
 		System.out.println("Speed: " + speed + " ms/record");
 	}
 	
+	
+	@Test
+	public void test_parseColorAndBodyType(){
+		
+		AutoFilter f = new AutoFilter();
+						
+		f.setPersonality(EPersonality.PRIVATE);
+		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setAgeType(EAgeType.WITH_MILEAGE);
+		f.setPrice(195000, 195000);
+						
+		WareList wares = wareLoader.load(f);
+		
+	}
+	
+	@Test
+	public void test_parsePravyRul(){
+		
+		AutoFilter f = new AutoFilter();
+						
+		f.setPersonality(EPersonality.PRIVATE);
+		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setAgeType(EAgeType.WITH_MILEAGE);
+		f.setPrice(115000,  115000);
+						
+		WareList wares = wareLoader.load(f);
+		
+	}
+	
+	@Test
+	public void test_parseBitiy(){
+		
+		AutoFilter f = new AutoFilter();
+						
+		f.setPersonality(EPersonality.PRIVATE);
+		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setAgeType(EAgeType.WITH_MILEAGE);
+		f.setPrice(210000,  210000);
+						
+		WareList wares = wareLoader.load(f);
+		
+	}
+	
+	
 	private String getFormatDate(long date){
 		return df.format(new Date(date));
 	}

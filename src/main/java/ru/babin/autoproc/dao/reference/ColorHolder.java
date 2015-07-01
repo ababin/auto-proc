@@ -13,6 +13,9 @@ public class ColorHolder extends BaseHolder<ColorRef>{
 	
 	@Transactional
 	public ColorRef get(String name){
+		if(name == null || name.trim().isEmpty()){
+			return null;
+		}
 		if(!map.containsKey(name.toLowerCase())){
 			synchronized(map){
 				if(!map.containsKey(name.toLowerCase())){

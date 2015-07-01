@@ -14,14 +14,11 @@ public class AutoruAutoDescConverterTest {
 	
 	@Test
 	public void test1(){
-		
-		String colorAndBodyType = "Черный внедорожник 5 дв.";
+				
 		String misc = "2.5hyb CVT (155 л.с.) 4WD гибрид, полный";
 		
-		AutoDesc ad = converter.convert(colorAndBodyType, misc);
+		AutoDesc ad = converter.convert(misc);
 		
-		assertEquals(ad.getColor(), "черный");
-		assertEquals(ad.getBodyType(), "внедорожник 5 дв.");
 		assertEquals(ad.getDrivingGear(), "полный");
 		assertEquals(ad.getEngineVolume(), 25);
 		assertEquals(ad.getFuel(), "гибрид");
@@ -32,13 +29,10 @@ public class AutoruAutoDescConverterTest {
 	@Test
 	public void test2(){
 		
-		String colorAndBodyType = "Черный внедорожник 5 дв.";
 		String misc = "MT бензин, передний";
 		
-		AutoDesc ad = converter.convert(colorAndBodyType, misc);
+		AutoDesc ad = converter.convert(misc);
 		
-		assertEquals(ad.getColor(), "черный");
-		assertEquals(ad.getBodyType(), "внедорожник 5 дв.");
 		assertEquals(ad.getDrivingGear(), "передний");
 		assertEquals(ad.getEngineVolume(), 0);
 		assertEquals(ad.getFuel(), "бензин");
@@ -49,13 +43,10 @@ public class AutoruAutoDescConverterTest {
 	@Test
 	public void test3(){
 		
-		String colorAndBodyType = "Черный внедорожник 5 дв.";
 		String misc = "Electro AT (516 кВт) 4WD электро, полный";
 		
-		AutoDesc ad = converter.convert(colorAndBodyType, misc);
+		AutoDesc ad = converter.convert(misc);
 		
-		assertEquals(ad.getColor(), "черный");
-		assertEquals(ad.getBodyType(), "внедорожник 5 дв.");
 		assertEquals(ad.getDrivingGear(), "полный");
 		assertEquals(ad.getEngineVolume(), 0);
 		assertEquals(ad.getFuel(), "электро");
@@ -67,13 +58,10 @@ public class AutoruAutoDescConverterTest {
 	@Test
 	public void test4(){
 		
-		String colorAndBodyType = "Черный внедорожник 5 дв.";
 		String misc = "1.5 MT (75 л.с.) бензин";
 		
-		AutoDesc ad = converter.convert(colorAndBodyType, misc);
+		AutoDesc ad = converter.convert(misc);
 		
-		assertEquals(ad.getColor(), "черный");
-		assertEquals(ad.getBodyType(), "внедорожник 5 дв.");
 		assertNull(ad.getDrivingGear());
 		assertEquals(ad.getEngineVolume(), 15);
 		assertEquals(ad.getFuel(), "бензин");
@@ -83,7 +71,20 @@ public class AutoruAutoDescConverterTest {
 	}
 	
 	
-	
+	@Test
+	public void test5(){
+		
+		String misc = "AT бензин / газ, полный";
+		
+		AutoDesc ad = converter.convert(misc);
+		
+		assertEquals(ad.getDrivingGear(), "полный");
+		assertEquals(ad.getEngineVolume(), 0);
+		assertEquals(ad.getFuel(), "бензин/газ");
+		assertEquals(ad.getGearBoxType(), "AT");
+		assertEquals(ad.getHorses(), 0);
+		assertEquals(ad.getPower(), 0);
+	}
 	
 	
 }

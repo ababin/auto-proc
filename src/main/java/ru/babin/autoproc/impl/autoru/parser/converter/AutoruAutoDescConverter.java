@@ -1,18 +1,14 @@
 package ru.babin.autoproc.impl.autoru.parser.converter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import ru.babin.autoproc.api.model.AutoDesc;
-import ru.babin.autoproc.api.model.EParam;
-import ru.babin.autoproc.api.model.Ware;
 
 public class AutoruAutoDescConverter {
 	
-	public AutoDesc convert(String colorAndBodyType, String misc){
+	public AutoDesc convert(String misc){
 		AutoDesc ad = new AutoDesc();
-		parseColorAndBodyType(colorAndBodyType, ad);
+		
 		try{
 			parseMisc(misc , ad);	
 		}catch(Exception e){
@@ -108,12 +104,26 @@ public class AutoruAutoDescConverter {
 			ar = Arrays.copyOfRange(ar, 0, ar.length-1); 
 		}
 		 
-		// fuel
-		String fuel = ar[ar.length-1];
-		if(fuel.endsWith(",")){
+		// FUEL
+		String fuel = null;
+		
+		
+		if("/".equals(ar[ar.length-2])){
+			// fuel can be difficult ("газ / бензин")
+			
+			fuel = ar[ar.length-3] + "/" + ar[ar.length-1];
+			ar = Arrays.copyOfRange(ar, 0, ar.length-3);
+		}else{
+			
+			// fuel simple
+			
+			fuel = ar[ar.length-1];
+			ar = Arrays.copyOfRange(ar, 0, ar.length-1);
+		}
+		if(fuel != null && fuel.endsWith(",")){
 			fuel = fuel.substring(0, fuel.length()-1);
 		}
-		ar = Arrays.copyOfRange(ar, 0, ar.length-1);
+				
 		
 		// find horses
 		int indexHorses = -1;

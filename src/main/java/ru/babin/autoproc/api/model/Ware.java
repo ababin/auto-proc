@@ -128,6 +128,14 @@ public class Ware {
 		return s == null ? 0 : Integer.valueOf(s);
 	}
 	
+	public String getWheel(){
+		return getParam(EParam.WHEEL);
+	}
+	
+	public String getState(){
+		return getParam(EParam.STATE);
+	}
+	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(getClass().getSimpleName() + "{");

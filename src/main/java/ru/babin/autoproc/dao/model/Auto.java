@@ -100,7 +100,13 @@ public class Auto {
 
 	@javax.persistence.Column(name = "PROVIDER_ID", nullable = false)
 	private Long providerId;
-
+	
+	@javax.persistence.Column(name = "WHEEL", length = 50)
+	private String wheel;
+	
+	@javax.persistence.Column(name = "STATE", length = 50)
+	private String state;
+	
 	public Long getId() {
 		return id;
 	}
@@ -333,6 +339,14 @@ public class Auto {
 		this.providerId = providerId;
 	}
 	
+	public String getWheel() {
+		return wheel;
+	}
+
+	public void setWheel(String wheel) {
+		this.wheel = wheel;
+	}
+	
 	public boolean equalsWithoutId(Auto a){
 		
 		return EqualsUtil.equals(a.getAdsNumber(), adsNumber) &&
@@ -362,7 +376,9 @@ public class Auto {
 				EqualsUtil.equals(a.getPrice() , price) &&
 				EqualsUtil.equals(a.getProvider(), provider) &&
 				EqualsUtil.equals(a.getProviderId() , providerId) &&
-				EqualsUtil.equals(a.getYear() , year);
+				EqualsUtil.equals(a.getYear() , year) &&
+				EqualsUtil.equals(a.getWheel() , wheel) &&
+				EqualsUtil.equals(a.getState() , state);
 		
 	}
 	
@@ -376,7 +392,8 @@ public class Auto {
 				"bodyType=" + bodyType + "; " + 
 				"bodyTypeId=" + bodyTypeId + "; " + 
 				"color=" + color + "; " + 
-				"colorId=" + colorId + "; " + 
+				"colorId=" + colorId + "; " +
+				"wheel=" + wheel + "; " +
 				"drivingGear=" + drivingGear + "; " + 
 				"drivingGeearId=" + drivingGearId + "; " + 
 				"engineVolume=" + engineVolume + "; " + 
@@ -390,6 +407,7 @@ public class Auto {
 				"adsUrl=" + adsUrl + "; " + 
 				"imageUrl=" + imageUrl + "; " + 
 				"price=" + price + "; " + 
+				"state=" + state + "; " +
 				"dateTime=" + date + "; " + 
 				"city=" + city + "; " + 
 				"cityId=" + cityId + "; " +
@@ -399,7 +417,13 @@ public class Auto {
 				"providerId=" + providerId + "; " +
 				"}";
 	}
-	
-	
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 }

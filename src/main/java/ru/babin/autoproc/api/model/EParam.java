@@ -76,5 +76,9 @@ public enum EParam {
 	
 	PHONE,
 	
+	WHEEL,
+	
+	STATE
+	
 	;
 }

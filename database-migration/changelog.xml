@@ -101,10 +101,18 @@
             ALTER TABLE model_ref ALTER COLUMN name type varchar(70);
         </sql>
     </changeSet>
+    
+    <changeSet id="2015-07-01-add-field-wheel-for-auto" author="a.babin" context="common">
+	    <addColumn tableName="auto">
+	        <column name="wheel" type="varchar(50)"/>
+	    </addColumn>
+	</changeSet>
 	
-	
-	
-	
+	<changeSet id="2015-07-01-add-field-state-for-auto" author="a.babin" context="common">
+	    <addColumn tableName="auto">
+	        <column name="state" type="varchar(50)"/>
+	    </addColumn>
+	</changeSet>
 	
 
 </databaseChangeLog>

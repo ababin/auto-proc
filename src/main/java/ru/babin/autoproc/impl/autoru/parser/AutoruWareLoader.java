@@ -99,8 +99,10 @@ public class AutoruWareLoader implements WareLoader{
 		
 		parseAdsUrl(ware , element);
 		parseImageUrl(ware, element);
+		parseBodyTypeAndColorAndWheel(ware, element);
 		parseDescShort(ware, element);
 		parsePrice(ware, element);
+		parseState(ware, element);
 		parseDateStr(ware, element);
 		parseCity(ware, element, region);
 		parseName(ware, element);
@@ -176,17 +178,16 @@ public class AutoruWareLoader implements WareLoader{
 	}
 	
 	private void parseDescShort(Ware ware , Element element){
-		String colorAndBodyType = getBodyTypeAndColor(element);
-		//String markAndModel = getMarkAndModel(element);
+		 
 		String misc = getCommonDesc(element);
 		
-		String fullDesc = colorAndBodyType + " " + misc;
-		ware.addParam(EParam.DESC_SHORT, fullDesc);
-		
-		AutoDesc ad = autoDescConverter.convert(colorAndBodyType,  misc);
+		String fullDesc = ware.getColor() == null ? "" : ware.getColor();
+		fullDesc += ware.getBodyType() == null ? "" : ware.getBodyType();
 				
-		ware.addParam(EParam.BODY_TYPE, ad.getBodyType());
-		ware.addParam(EParam.COLOR, ad.getColor());
+		ware.addParam(EParam.DESC_SHORT, fullDesc.trim() + " " + misc);
+		
+		AutoDesc ad = autoDescConverter.convert(misc);
+				
 		ware.addParam(EParam.DRIVING_GEAR, ad.getDrivingGear());
 		ware.addParam(EParam.ENGINE_VOLUME, String.valueOf(ad.getEngineVolume()));
 		ware.addParam(EParam.FUEL, String.valueOf(ad.getFuel()));
@@ -204,22 +205,36 @@ public class AutoruWareLoader implements WareLoader{
 		return findFullValue(element, "a","sales-list-link");
 	}
 	
-	private String getBodyTypeAndColor(Element element){
+	private void parseBodyTypeAndColorAndWheel(Ware ware, Element element){
 		Element el = findElement(element , "div" , "body-type-text");
 		Elements els = el.children();
 		String color = els.get(0).text();
 		String bodyType = els.get(1).text().toLowerCase();
-		String res = color + " " + bodyType; 
-		return res.trim();
+		if(color != null && !color.trim().isEmpty()){
+			ware.addParam(EParam.COLOR, color.trim());
+		}
+		if(bodyType != null && !bodyType.trim().isEmpty()){
+			ware.addParam(EParam.BODY_TYPE, bodyType.trim());
+		}
+		String wheel = findValue(el, "div", "sales-list-wheel");
+		if(wheel != null && !wheel.trim().isEmpty()){
+			ware.addParam(EParam.WHEEL, wheel.trim());
+		}
+		
 	}
 	
 	private void parsePrice(Ware ware , Element element){
 		String priceStr = findFullValue(element, "div", "sales-list-price");
 		ware.addParam(EParam.PRICE_STR, priceStr);
 		ware.addParam(EParam.PRICE, String.valueOf(NumberUtil.getAsInt(priceStr)));
-		
 	}
 	
+	private void parseState(Ware ware , Element element){
+		String state = findFullValue(element, "div", "sales-list-state");
+		if(state != null && !state.trim().isEmpty())
+		ware.addParam(EParam.STATE, state.trim());
+	}
+			
 	private String findValue(Element element, String tagName, String cssClass, String attrName){
 		Elements els = element.getElementsByTag(tagName);
 		if(els != null && els.size() > 0){
