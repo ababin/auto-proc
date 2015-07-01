@@ -32,7 +32,7 @@ public class AutoruFullLoader {
 	private AutoruWareLoader wareLoader = new AutoruWareLoader();
 	
 	public void process(){
-		for(int year = 1991; year < 1993; year++){
+		for(int year = 1990; year < 2016; year++){
 			int count  = processByYear(year);
 			log.debug("LOADED year " + year + ". Loaded entities: " + count);
 			log.debug("=====================================================================================================");
