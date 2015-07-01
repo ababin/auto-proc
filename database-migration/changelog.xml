@@ -90,6 +90,18 @@
         </sql>
     </changeSet>
 	
+	<changeSet id="2015-06-30-change-field-model-for-table-auto" author="a.babin" context="common" >
+        <sql endDelimiter=";">
+            ALTER TABLE auto ALTER COLUMN model type varchar(70);
+        </sql>
+    </changeSet>
+	
+	<changeSet id="2015-06-30-change-field-name-for-table-model_ref" author="a.babin" context="common" >
+        <sql endDelimiter=";">
+            ALTER TABLE model_ref ALTER COLUMN name type varchar(70);
+        </sql>
+    </changeSet>
+	
 	
 	
 	
