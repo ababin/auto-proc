@@ -41,6 +41,11 @@ public class AutoruDateConverter {
 		c.set(Calendar.DAY_OF_MONTH , day);
 		c.set(Calendar.MONTH, month);
 		
+		if(ar.length > 2){
+			int year = Integer.valueOf(ar[2]);
+			c.set(Calendar.YEAR, year);
+		}
+		
 		setBeginOfDate(c);
 		
 		return c.getTimeInMillis();

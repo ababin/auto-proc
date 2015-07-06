@@ -10,12 +10,10 @@ import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.EGearBoxType;
-import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
 import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
-import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.impl.avito.parser.AvitoWareLoader;
 
@@ -36,8 +34,8 @@ public class AvitoWareLoaderTest {
 		f.setPersonality(EPersonality.PRIVATE);
 		f.setPrice(350000, 440000);
 		f.addGearBoxType(EGearBoxType.AUTOMAT);
-		f.setMileage(EMileAge.MA_10, EMileAge.MA_40);
-		f.setYearFrom(EYear.YEAR_2010);
+		f.setMileage(10000, 40000);
+		f.setYearFrom(2010);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		
 		List <Ware> wares = wareLoader.load(f);

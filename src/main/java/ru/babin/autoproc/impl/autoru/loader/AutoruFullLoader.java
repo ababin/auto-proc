@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.babin.autoproc.api.filter.AutoFilter;
 import ru.babin.autoproc.api.model.EAgeType;
 import ru.babin.autoproc.api.model.EPersonality;
-import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.api.model.WareList;
 import ru.babin.autoproc.dao.service.AutoDaoServiceImpl;
@@ -27,14 +26,15 @@ public class AutoruFullLoader {
 	private final int MAX_ADS_FOR_LOADING = 4500;
 	private final int MIN_ADS_FOR_LOADING = 3000;
 	private final int MAX_DOUBLE_COUNT = 10;
-	private final int PRICE_STEP = 50000;
+	private final int PRICE_STEP = 100000; //50000;
 	
 	private AutoruWareLoader wareLoader = new AutoruWareLoader();
 	
 	public void process(){
 		for(int year = 1990; year < 2016; year++){
+			log.debug("Loading year : {} ...", year);
 			int count  = processByYear(year);
-			log.debug("LOADED year " + year + ". Loaded entities: " + count);
+			log.debug("LOADED year {}. Loaded entities: {}", year, count);
 			log.debug("=====================================================================================================");
 		}
 	}
@@ -49,8 +49,8 @@ public class AutoruFullLoader {
 			LoadedResult res = process(context);
 			totalCreated += res.loadedCount;
 			
-			//     либо дубликаты          либо удалось всё загрузить без привлечения цены
-			if(res.dublicatesWasFound || context.currentFilter.isWithoutUpperPrice()){
+			// удалось всё загрузить без привлечения цены
+			if(context.currentFilter.isWithoutUpperPrice()){
 				break;
 			}
 			
@@ -137,9 +137,9 @@ public class AutoruFullLoader {
 		}
 				
 		if(partFilter.year == 1990){
-			f.setYear(null, EYear.YEAR_1990);
+			f.setYear(0, 1990);
 		}else{
-			f.setYear(EYear.fromYear(partFilter.year), EYear.fromYear(partFilter.year));
+			f.setYear(partFilter.year, partFilter.year);
 		}
 		f.setPrice(partFilter.priceFrom, partFilter.priceTo);
 		

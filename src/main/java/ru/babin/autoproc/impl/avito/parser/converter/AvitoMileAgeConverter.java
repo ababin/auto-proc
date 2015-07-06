@@ -6,15 +6,22 @@ public class AvitoMileAgeConverter {
 	
 	private final String FLAG_CODE = "1375"; 
 	
-	public String convert(EMileAge mileageFrom , EMileAge mileageTo){
-		if(mileageFrom == null){
-			mileageFrom = EMileAge.MA_0;
-		}
-		if(mileageTo == null){
-			mileageTo = EMileAge.MA_500;
+	public String convert(int mileageFrom , int mileageTo){
+		EMileAge from;
+		EMileAge to;
+		if(mileageFrom == 0){
+			from = EMileAge.MA_0;
+		}else{
+			from = EMileAge.fromMiles(mileageFrom);
 		}
 		
-		return FLAG_CODE + "_" + mileageFrom.getCode() + "b" + mileageTo.getCode();		
+		if(mileageTo == 0){
+			to = EMileAge.MA_500;
+		}else{
+			to = EMileAge.fromMiles(mileageTo);
+		}
+		
+		return FLAG_CODE + "_" + from.getCode() + "b" + to.getCode();		
 	}
 	
 }

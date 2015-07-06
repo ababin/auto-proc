@@ -60,5 +60,14 @@ public enum EMileAge {
 		return miles * 1000;
 	}
 	
+	public static EMileAge fromMiles(int val){
+		for(EMileAge v : EMileAge.values()){
+			if(v.getMiles() <= val){
+				return v;
+			}
+		}
+		return EMileAge.MA_500;
+	}
+	
 	
 }

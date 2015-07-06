@@ -13,11 +13,9 @@ import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.EGearBoxType;
-import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EParam;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
-import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.api.model.WareList;
 import ru.babin.autoproc.impl.autoru.parser.AutoruWareLoader;
@@ -36,12 +34,12 @@ public class AutoruWareLoaderTest {
 		f.setCategory(ECategory.AUTO);
 		f.setPrice(350000, 430000);
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_2010, EYear.YEAR_2015);
+		f.setYear(2010, 2015);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		f.addAutoBodyType(EAutoBodyType.SEDAN);
 		f.setBrand(EBrand._KOREA);
 		f.addGearBoxType(EGearBoxType.AUTOMAT);
-		f.setMileAgeTo(EMileAge.MA_70);
+		f.setMileAgeTo(70000);
 				
 		List <Ware> wares = wareLoader.load(f);
 		
@@ -63,7 +61,7 @@ public class AutoruWareLoaderTest {
 		long dBegin = System.currentTimeMillis();
 		
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_2012, EYear.YEAR_2012);
+		f.setYear(2012, 2012);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		//f.setNeedPhone(true);
 		
@@ -122,7 +120,7 @@ public class AutoruWareLoaderTest {
 		AutoFilter f = new AutoFilter();
 						
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setYear(1991, 1991);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		f.setPrice(195000, 195000);
 						
@@ -136,7 +134,7 @@ public class AutoruWareLoaderTest {
 		AutoFilter f = new AutoFilter();
 						
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setYear(1991, 1991);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		f.setPrice(115000,  115000);
 						
@@ -150,7 +148,7 @@ public class AutoruWareLoaderTest {
 		AutoFilter f = new AutoFilter();
 						
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_1991, EYear.YEAR_1991);
+		f.setYear(1991, 1991);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		f.setPrice(210000,  210000);
 						

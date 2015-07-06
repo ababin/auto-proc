@@ -20,7 +20,7 @@ import ru.babin.autoproc.impl.autoru.parser.converter.AutoruRegionConverter;
 public class AutoruHttpLoader implements HttpLoader{
 	
 	//public static final String SEARCH_URL = "http://auto.ru/cars/used/?show_sales=1&sort[set_date]=desc";
-	public static final String SEARCH_URL = "http://auto.ru/cars/{ageType}/?show_sales=1&sort[set_date]=desc";
+	public static final String SEARCH_URL = "http://auto.ru/cars/{ageType}/?show_sales=1&sort[create_date]=desc";
 	
 	public final String PROVIDER_NAME = "AUTO.RU";
 	public final String PROVIDER_SITE = "auto.ru";
@@ -92,13 +92,13 @@ public class AutoruHttpLoader implements HttpLoader{
 		}
 		
 		// yearFrom
-		if(filter.getYearFrom() != null){
-			params.add("search[year][min]=" + filter.getYearFrom().getYear());
+		if(filter.getYearFrom() > 0){
+			params.add("search[year][min]=" + filter.getYearFrom());
 		}
 		
 		// yearTo
-		if(filter.getYearTo() != null){
-			params.add("search[year][max]=" + filter.getYearTo().getYear());
+		if(filter.getYearTo() > 0){
+			params.add("search[year][max]=" + filter.getYearTo());
 		}
 		
 		// body
@@ -119,11 +119,11 @@ public class AutoruHttpLoader implements HttpLoader{
 		}
 				
 		//run
-		if(filter.getMileAgeFrom() != null){
-			params.add("search[run][min]=" + filter.getMileAgeFrom().getMiles());
+		if(filter.getMileAgeFrom() > 0){
+			params.add("search[run][min]=" + filter.getMileAgeFrom());
 		}
-		if(filter.getMileageTo() != null){
-			params.add("search[run][max]=" + filter.getMileageTo().getMiles());
+		if(filter.getMileAgeTo() > 0){
+			params.add("search[run][max]=" + filter.getMileAgeTo());
 		}
 		
 		// page

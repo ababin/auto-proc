@@ -2,26 +2,33 @@ package ru.babin.autoproc.api.model;
 
 public enum EGearBoxType {
 	
-	MECHANIC("Механика"),
+	MECHANIC("Механическая", "MT"),
 	
-	AUTOMAT("Автомат"),
+	AUTOMAT("Автомат", "AT"),
 	
-	AUTOMAT_AUTOMATIC("Автоматическая"),
+	AUTOMAT_AUTOMATIC("Автоматическая" , "AT"),
 	
-	AUTOMAT_ROBOT("Роботизированная"),
+	AUTOMAT_ROBOT("Роботизированная", "AT"),
 	
-	AUTOMAT_VARIATOR("Вариатор"),
+	AUTOMAT_VARIATOR("Вариатор", "CVT"),
 	;
 	
 	
 	private String readableName;
+	
+	private String dbVal;
 		
-	private EGearBoxType(String n){
-		readableName = n; 
+	private EGearBoxType(String n, String val){
+		readableName = n;
+		dbVal = val;
 	}
 
 	public String getReadableName() {
 		return readableName;
 	}
-	
+
+	public String getDbVal() {
+		return dbVal;
+	}
+		
 }

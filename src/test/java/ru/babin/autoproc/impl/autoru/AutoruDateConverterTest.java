@@ -42,6 +42,19 @@ public class AutoruDateConverterTest {
 		Assert.assertEquals(l, c.getTimeInMillis());
 	}
 	
+	@Test
+	public void test_someDatePast(){
+		long l = converter.convert("27 июл 2014");
+		
+		Calendar c = GregorianCalendar.getInstance();
+		setBeginOfDate(c);
+		c.set(Calendar.MONTH, Calendar.JULY);
+		c.set(Calendar.DAY_OF_MONTH, 27);
+		c.set(Calendar.YEAR, 2014);
+				
+		Assert.assertEquals(l, c.getTimeInMillis());
+	}
+	
 		
 	
 	

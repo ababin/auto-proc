@@ -1,11 +1,7 @@
 package ru.babin.autoproc.http;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.httpclient.Cookie;
@@ -40,6 +36,7 @@ public class HttpRequester {
 		
 		try {
 			url = encodeUrl(url);
+			//log.debug("URL: {}" , url);
 			GetMethod getMethod = new GetMethod(url);
 			getMethod.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
 			setCookies(client);

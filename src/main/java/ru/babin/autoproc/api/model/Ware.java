@@ -18,6 +18,14 @@ public class Ware {
 		params.put(eparam,p);
 	}
 	
+	public void addParam(EParam eparam , int value){
+		addParam(eparam, String.valueOf(value));
+	}
+	
+	public void addParam(EParam eparam , long value){
+		addParam(eparam, String.valueOf(value));
+	}
+	
 	public String getName(){
 		return getParam(EParam.NAME);
 	}

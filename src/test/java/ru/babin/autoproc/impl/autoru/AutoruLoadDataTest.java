@@ -9,7 +9,6 @@ import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
-import ru.babin.autoproc.api.model.EYear;
 import ru.babin.autoproc.http.Response;
 import ru.babin.autoproc.impl.autoru.parser.AutoruHttpLoader;
 
@@ -24,7 +23,7 @@ public class AutoruLoadDataTest {
 		f.setCategory(ECategory.AUTO);
 		f.setPrice(350000, 440000);
 		f.setPersonality(EPersonality.PRIVATE);
-		f.setYear(EYear.YEAR_2010, EYear.YEAR_2015);
+		f.setYear(2010, 2015);
 		f.setAgeType(EAgeType.WITH_MILEAGE);
 		f.addAutoBodyType(EAutoBodyType.SEDAN);
 		f.setBrand(EBrand._KOREA);

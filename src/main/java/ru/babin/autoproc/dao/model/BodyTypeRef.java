@@ -3,6 +3,8 @@ package ru.babin.autoproc.dao.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import ru.babin.autoproc.api.model.EAutoBodyType;
+
 @Entity
 @Table(name = "BODY_TYPE_REF")
 public class BodyTypeRef implements IRef{
@@ -14,6 +16,10 @@ public class BodyTypeRef implements IRef{
 
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 50)
 	private String name;
+	
+	@javax.persistence.Column(name = "ENUM_NAME", nullable = true, length = 20)
+	@javax.persistence.Enumerated(javax.persistence.EnumType.STRING)
+	private EAutoBodyType enumName;
 
 	public Long getId() {
 		return id;
@@ -29,6 +35,14 @@ public class BodyTypeRef implements IRef{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public EAutoBodyType getEnumName() {
+		return enumName;
+	}
+
+	public void setEnumName(EAutoBodyType enumName) {
+		this.enumName = enumName;
 	}
 
 }

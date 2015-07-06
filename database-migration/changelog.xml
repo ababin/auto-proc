@@ -114,6 +114,20 @@
 	    </addColumn>
 	</changeSet>
 	
+	<changeSet id="2015-07-04-add-field-enum_name-for-body_type_ref" author="a.babin" context="common">
+	    <addColumn tableName="body_type_ref">
+	        <column name="enym_name" type="varchar(20)"/>
+	    </addColumn>
+	</changeSet>
+	
+	<changeSet id="2015-07-04-rename-field-enum_name-for-body_type_ref" author="a.babin" context="common">
+	    <renameColumn tableName="body_type_ref" oldColumnName="enym_name" newColumnName="enum_name" />
+	</changeSet>
+	
+	
+	
+	
+	
 
 </databaseChangeLog>
 

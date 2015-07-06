@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.babin.autoproc.api.filter.AutoFilter;
+import ru.babin.autoproc.api.model.EGearBoxType;
 import ru.babin.autoproc.api.model.Ware;
 import ru.babin.autoproc.dao.model.Auto;
 import ru.babin.autoproc.dao.model.BodyTypeRef;
@@ -167,6 +169,112 @@ public class AutoDaoServiceImpl {
 		log.warn("Found already existence record (Auto), but there are a few changes. Record UPDATED!");
 		return DbOpStatus.UPDATED;
 	}
+	
+	@Transactional(readOnly=true)
+	public List <Auto> load(AutoFilter filter){
+				
+		return
+		emanager.createQuery(
+				"SELECT a FROM Auto a "
+				+ "WHERE 1=1 "
+				+ getQueryPartForYear(filter)  
+				+ getQueryPartForMileAge(filter)
+				+ getQueryPartForGearBoxTypes(filter)
+				+ getQueryPartForPrice(filter)
+				+ getQueryPartForBodyType(filter)
+				+ getQueryPartForMark(filter)
+				+"  ORDER BY a.date DESC"
+						
+				, Auto.class)
+		.setMaxResults(100)
+		.getResultList();
+		
+	}
+	
+	private String getQueryPartForYear(AutoFilter filter){
+		String q = "";
+		if(filter.getYearFrom() > 0){
+			q += "  AND a.year >= " + filter.getYearFrom();
+		}
+		if(filter.getYearTo() > 0){
+			q += "  AND a.year <= " + filter.getYearTo();
+		}
+		return "  " + q.trim();		
+	}
+	
+	private String getQueryPartForMark(AutoFilter filter){
+		if(filter.getMarkId() != null && filter.getMarkId() > 0){
+			return "  AND a.markId = " + filter.getMarkId();
+		}else{
+			return "";
+		}
+	}
+	
+	private String getQueryPartForMileAge(AutoFilter filter){
+		String q = "";
+		if(filter.getMileAgeFrom() > 0){
+			q += "  AND a.mileAge >= " + filter.getMileAgeFrom();
+		}
+		if(filter.getMileAgeTo() > 0){
+			q += "  AND a.mileAge <= " + filter.getMileAgeTo();
+		}
+		return "  " + q.trim();		
+	}
+	
+	private String getQueryPartForBodyType(AutoFilter filter){
+		if(filter.getAutoBodyTypes().isEmpty()){
+			return "";
+		}
+		List <Long> ids = bodyTypeHolder.getIdsFor(filter.getAutoBodyTypes());
+		
+		String v = "";
+		for(Long id : ids){
+			if(v.isEmpty()){
+				v += id ; 
+			}else{
+				v += ", " + id;
+			}
+		}
+		
+		if(v.isEmpty()){
+			return "";
+		}
+		
+		return "  AND a.bodyTypeId IN (" + v + ")";
+	}
+	
+	private String getQueryPartForGearBoxTypes(AutoFilter filter){
+		if(filter.getGearBoxTypes() == null || filter.getGearBoxTypes().isEmpty()){
+			return "";
+		}
+		
+		String v = "";
+		for(EGearBoxType gearBoxType : filter.getGearBoxTypes()){
+			if(v.isEmpty()){
+				v += "'" + gearBoxType.getDbVal() + "'"; 
+			}else{
+				v += ", '" + gearBoxType.getDbVal() + "'";
+			}
+		}
+		
+		if(!v.isEmpty()){
+			return  "  AND a.gearBoxType IN(" + v + ")";
+		}
+		return "";		
+	}
+	
+	private String getQueryPartForPrice(AutoFilter filter){
+		String q = "";
+		if(filter.getPriceFrom() > 0){
+			q += "  AND a.price >= " + filter.getPriceFrom();
+		}
+		if(filter.getPriceTo() > 0){
+			q += "  AND a.price <= " + filter.getPriceTo();
+		}
+		return "  " + q.trim();	
+	}
+	
+	 
 	
 	@PostConstruct
 	@Transactional

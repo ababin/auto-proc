@@ -10,11 +10,9 @@ import ru.babin.autoproc.api.model.EAutoBodyType;
 import ru.babin.autoproc.api.model.EBrand;
 import ru.babin.autoproc.api.model.ECategory;
 import ru.babin.autoproc.api.model.EGearBoxType;
-import ru.babin.autoproc.api.model.EMileAge;
 import ru.babin.autoproc.api.model.EModel;
 import ru.babin.autoproc.api.model.EPersonality;
 import ru.babin.autoproc.api.model.ERegion;
-import ru.babin.autoproc.api.model.EYear;
 
 public class AutoFilter {
 	
@@ -24,6 +22,8 @@ public class AutoFilter {
 	
 	private EBrand brand;
 	private String brandVal;
+	
+	private Long markId;
 	
 	private EModel model;
 
@@ -37,13 +37,13 @@ public class AutoFilter {
 	
 	private int priceTo;
 	
-	private EMileAge mileageFrom;
+	private int mileageFrom;
 	
-	private EMileAge mileageTo;
+	private int mileageTo;
 	
-	private EYear yearFrom = EYear.YEAR_1960;
+	private int yearFrom;
 	
-	private EYear yearTo = EYear.YEAR_2015;
+	private int yearTo;
 	
 	private EAgeType ageType = EAgeType.ALL;
 	
@@ -131,44 +131,44 @@ public class AutoFilter {
 		gearBoxTypes.add(t);
 	}
 
-	public EMileAge getMileAgeFrom() {
+	public int getMileAgeFrom() {
 		return mileageFrom;
 	}
 
-	public void setMileAgeFrom(EMileAge mileageFrom) {
+	public void setMileAgeFrom(int mileageFrom) {
 		this.mileageFrom = mileageFrom;
 	}
 
-	public EMileAge getMileageTo() {
+	public int getMileAgeTo() {
 		return mileageTo;
 	}
 
-	public void setMileAgeTo(EMileAge mileageTo) {
+	public void setMileAgeTo(int mileageTo) {
 		this.mileageTo = mileageTo;
 	}
 	
-	public void setMileage(EMileAge mileageFrom, EMileAge mileageTo){
+	public void setMileage(int mileageFrom, int mileageTo){
 		this.mileageFrom = mileageFrom;
 		this.mileageTo = mileageTo;
 	}
 
-	public EYear getYearFrom() {
+	public int getYearFrom() {
 		return yearFrom;
 	}
 
-	public void setYearFrom(EYear yearFrom) {
+	public void setYearFrom(int yearFrom) {
 		this.yearFrom = yearFrom;
 	}
 
-	public EYear getYearTo() {
+	public int getYearTo() {
 		return yearTo;
 	}
 
-	public void setYearTo(EYear yearTo) {
+	public void setYearTo(int yearTo) {
 		this.yearTo = yearTo;
 	}
 	
-	public void setYear(EYear yearFrom , EYear yearTo){
+	public void setYear(int yearFrom , int yearTo){
 		this.yearFrom = yearFrom;
 		this.yearTo = yearTo;
 	}
@@ -227,6 +227,14 @@ public class AutoFilter {
 	
 	public boolean withoutPriceTo(){
 		return priceTo == 0;
+	}
+
+	public Long getMarkId() {
+		return markId;
+	}
+
+	public void setMarkId(Long markId) {
+		this.markId = markId;
 	}
 		 
 }
