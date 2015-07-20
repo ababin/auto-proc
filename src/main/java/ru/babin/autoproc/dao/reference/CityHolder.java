@@ -1,5 +1,7 @@
 package ru.babin.autoproc.dao.reference;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.babin.autoproc.dao.model.CityRef;
@@ -27,7 +29,10 @@ public class CityHolder extends BaseHolder<CityRef>{
 		return map.get(name.toLowerCase());
 	}
 		
-	
+	@Transactional(readOnly=true)
+	public List <CityRef> getAll(){
+		return emanager.createQuery("SELECT e FROM CityRef e ORDER BY name", clazz).getResultList();
+	}
 	
 	
 	
